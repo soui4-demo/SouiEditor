@@ -77,7 +77,7 @@ HEADERS += CDebug.h \
            Dialog/DlgNewLayout.h \
            Dialog/DlgResMgr.h \
            Dialog/DlgInsertXmlElement.h \
-           $(SOUI4PATH)/controls.extend/ $(SOUI4PATH)/controls.extend/propgrid/colorpicker/ColourPopup.h \
+            $(SOUI4PATH)/controls.extend/propgrid/colorpicker/ColourPopup.h \
             $(SOUI4PATH)/controls.extend/propgrid/colorpicker/SColorPicker.h \
             $(SOUI4PATH)/controls.extend/propgrid/colorpicker/Tooltipctrl.h \
             $(SOUI4PATH)/controls.extend/propgrid/SPropertyEmbedWndHelper.hpp \
