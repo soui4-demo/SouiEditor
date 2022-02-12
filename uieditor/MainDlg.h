@@ -81,10 +81,10 @@ protected:
 		if(pIcon) pIcon->SetIcon(m_arrIcons[position].iIcon);
 		SWindow *pTxt = pItem->FindChildByName(L"item_text");
 		if(pTxt) pTxt->SetWindowText(m_arrIcons[position].strTxt);
-		pItem->GetEventSet()->subscribeEvent(EventItemPanelClick::EventID,Subscriber(&CWidgetTBAdapter::OnItemClick,this));
+		pItem->GetEventSet()->subscribeEvent(EventItemPanelClickUp::EventID,Subscriber(&CWidgetTBAdapter::OnItemClickUp,this));
 	}
 
-	BOOL OnItemClick(IEvtArgs *e)
+	BOOL OnItemClickUp(IEvtArgs *e)
 	{
 		SItemPanel *pItem = sobj_cast<SItemPanel>(e->Sender());
 		int iItem = pItem->GetItemIndex();
@@ -156,10 +156,10 @@ protected:
 		if(pIcon) pIcon->SetIcon(m_arrIcons[position].iIcon);
 		SWindow *pTxt = pItem->FindChildByName(L"item_text");
 		if(pTxt) pTxt->SetWindowText(m_arrIcons[position].strTxt);
-		pItem->GetEventSet()->subscribeEvent(EventItemPanelClick::EventID,Subscriber(&CSkinTBAdapter::OnItemClick,this));
+		pItem->GetEventSet()->subscribeEvent(EventItemPanelClickUp::EventID,Subscriber(&CSkinTBAdapter::OnItemClickUp,this));
 	}
 
-	BOOL OnItemClick(IEvtArgs *e)
+	BOOL OnItemClickUp(IEvtArgs *e)
 	{
 		SItemPanel *pItem = sobj_cast<SItemPanel>(e->Sender());
 		int iItem = pItem->GetItemIndex();
