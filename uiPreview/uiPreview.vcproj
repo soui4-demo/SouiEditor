@@ -20,7 +20,7 @@
 			UseOfMfc="0">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories=".,.,$(SOUI3PATH)/utilities/include,$(SOUI3PATH)/soui/include,$(SOUI3PATH)/components,$(SOUI3PATH)/config,.,$(SOUI3PATH)/controls.extend,..\..\soui3.git\tools\mkspecs\win32-msvc2008"
+				AdditionalIncludeDirectories=".,.,$(SOUI4PATH)/utilities/include,$(SOUI4PATH)/soui/include,$(SOUI4PATH)/components,$(SOUI4PATH)/config,.,$(SOUI4PATH)/controls.extend,..\..\soui4.git\tools\mkspecs\win32-msvc2008"
 				AdditionalOptions="/MP"
 				AssemblerListingLocation="..\obj\release\uiPreview\"
 				DebugInformationFormat="0"
@@ -42,8 +42,8 @@
 				Name="VCCustomBuildTool" />
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="utilities.lib soui3.lib"
-				AdditionalLibraryDirectories="$(SOUI3PATH)\bin,..\bin"
+				AdditionalDependencies="utilities4.lib soui4.lib"
+				AdditionalLibraryDirectories="$(SOUI4PATH)\bin,..\bin"
 				AdditionalOptions="&quot;/MANIFESTDEPENDENCY:type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos; processorArchitecture=&apos;*&apos;&quot;"
 				DataExecutionPrevention="true"
 				GenerateDebugInformation="false"
@@ -83,7 +83,7 @@
 			UseOfMfc="0">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories=".,.,$(SOUI3PATH)/utilities/include,$(SOUI3PATH)/soui/include,$(SOUI3PATH)/components,$(SOUI3PATH)/config,.,$(SOUI3PATH)/controls.extend,..\..\soui3.git\tools\mkspecs\win32-msvc2008"
+				AdditionalIncludeDirectories=".,.,$(SOUI4PATH)/utilities/include,$(SOUI4PATH)/soui/include,$(SOUI4PATH)/components,$(SOUI4PATH)/config,.,$(SOUI4PATH)/controls.extend,..\..\soui4.git\tools\mkspecs\win32-msvc2008"
 				AdditionalOptions="/MP"
 				AssemblerListingLocation="..\obj\debug\uiPreview\"
 				DebugInformationFormat="3"
@@ -105,8 +105,8 @@
 				Name="VCCustomBuildTool" />
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="utilitiesd.lib soui3d.lib"
-				AdditionalLibraryDirectories="$(SOUI3PATH)\bin,..\bin"
+				AdditionalDependencies="utilities4d.lib soui4d.lib"
+				AdditionalLibraryDirectories="$(SOUI4PATH)\bin,..\bin"
 				AdditionalOptions="&quot;/MANIFESTDEPENDENCY:type=&apos;win32&apos; name=&apos;Microsoft.Windows.Common-Controls&apos; version=&apos;6.0.0.0&apos; publicKeyToken=&apos;6595b64144ccf1df&apos; language=&apos;*&apos; processorArchitecture=&apos;*&apos;&quot;"
 				DataExecutionPrevention="true"
 				GenerateDebugInformation="true"

@@ -34,17 +34,17 @@ public:
 		virtual void OnInsertWidget(IconInfo *info) = 0;
 	};
 public:
-	CWidgetTBAdapter(pugi::xml_node xmlNode,IListener* pListener):m_pListener(pListener)
+	CWidgetTBAdapter(SXmlNode xmlNode,IListener* pListener):m_pListener(pListener)
 	{
-		pugi::xml_node xmlIconSkin = xmlNode.child(L"toolbar").child(L"icons");
+		SXmlNode xmlIconSkin = xmlNode.child(L"toolbar").child(L"icons");
 		ISkinObj *pSkin = SApplication::getSingleton().CreateSkinByName(xmlIconSkin.attribute(L"class_name").as_string(SSkinImgList::GetClassName()));
 		if(pSkin)
 		{
-			pSkin->InitFromXml(xmlIconSkin);
+			pSkin->InitFromXml(&xmlIconSkin);
 			SSkinPoolMgr::getSingleton().GetUserSkinPool()->AddSkin(pSkin);
 			pSkin->Release();
 		}
-		pugi::xml_node xmlWidget = xmlNode.child(L"controls").first_child();
+		SXmlNode xmlWidget = xmlNode.child(L"controls").first_child();
 		while(xmlWidget)
 		{
 			if(xmlWidget.attribute(L"visible").as_bool(true))
@@ -57,25 +57,25 @@ public:
 				else
 					info.strTxt = xmlWidget.name();
 				info.strTip = xmlWidget.attribute(L"tip").as_string();
-				pugi::xml_writer_buff xmlWrite;
-				xmlWidget.child(xmlWidget.name()).print(xmlWrite,L"\t", pugi::format_default, pugi::encoding_utf16);
-				info.strContent = S_CW2A(SStringW(xmlWrite.buffer(),xmlWrite.size()),CP_UTF8);
+				SStringW strContent;
+				xmlWidget.child(xmlWidget.name()).ToString(&strContent); 
+				info.strContent = S_CW2A(strContent,CP_UTF8);
 				m_arrIcons.Add(info);
 			}
 			xmlWidget = xmlWidget.next_sibling();
 		}
 	}
 protected:
-	virtual int getCount()
+	virtual int WINAPI getCount()
 	{
 		return m_arrIcons.GetCount();
 	}
 
-	virtual void getView(int position, SWindow * pItem, pugi::xml_node xmlTemplate)
+	virtual void WINAPI getView(int position, SItemPanel * pItem, SXmlNode xmlTemplate)
 	{
 		if(pItem->GetChildrenCount()==0)
 		{
-			pItem->InitFromXml(xmlTemplate);
+			pItem->InitFromXml(&xmlTemplate);
 		}
 		SImageWnd *pIcon = pItem->FindChildByName2<SImageWnd>(L"item_icon");
 		if(pIcon) pIcon->SetIcon(m_arrIcons[position].iIcon);
@@ -84,9 +84,9 @@ protected:
 		pItem->GetEventSet()->subscribeEvent(EventItemPanelClick::EventID,Subscriber(&CWidgetTBAdapter::OnItemClick,this));
 	}
 
-	bool OnItemClick(EventArgs *e)
+	BOOL OnItemClick(IEvtArgs *e)
 	{
-		SItemPanel *pItem = sobj_cast<SItemPanel>(e->sender);
+		SItemPanel *pItem = sobj_cast<SItemPanel>(e->Sender());
 		int iItem = pItem->GetItemIndex();
 		m_pListener->OnInsertWidget(&m_arrIcons[iItem]);
 		return true;
@@ -112,17 +112,17 @@ public:
 		virtual void OnInertSkin(IconInfo * info) = 0;
 	};
 public:
-	CSkinTBAdapter(pugi::xml_node xmlNode, IListener * pListener):m_pListener(pListener)
+	CSkinTBAdapter(SXmlNode xmlNode, IListener * pListener):m_pListener(pListener)
 	{
-		pugi::xml_node xmlIconSkin = xmlNode.child(L"toolbar").child(L"icons");
+		SXmlNode xmlIconSkin = xmlNode.child(L"toolbar").child(L"icons");
 		ISkinObj *pSkin = SApplication::getSingleton().CreateSkinByName(xmlIconSkin.attribute(L"class_name").as_string(SSkinImgList::GetClassName()));
 		if(pSkin)
 		{
-			pSkin->InitFromXml(xmlIconSkin);
+			pSkin->InitFromXml(&xmlIconSkin);
 			SSkinPoolMgr::getSingleton().GetUserSkinPool()->AddSkin(pSkin);
 			pSkin->Release();
 		}
-		pugi::xml_node xmlSkin = xmlNode.child(L"skins").first_child();
+		SXmlNode xmlSkin = xmlNode.child(L"skins").first_child();
 		while(xmlSkin)
 		{
 			if(xmlSkin.attribute(L"visible").as_bool(true))
@@ -141,16 +141,16 @@ public:
 		}
 	}
 protected:
-	virtual int getCount()
+	virtual int WINAPI getCount()
 	{
 		return m_arrIcons.GetCount();
 	}
 
-	virtual void getView(int position, SWindow * pItem, pugi::xml_node xmlTemplate)
+	virtual void WINAPI getView(int position, SItemPanel * pItem, SXmlNode xmlTemplate)
 	{
 		if(pItem->GetChildrenCount()==0)
 		{
-			pItem->InitFromXml(xmlTemplate);
+			pItem->InitFromXml(&xmlTemplate);
 		}
 		SImageWnd *pIcon = pItem->FindChildByName2<SImageWnd>(L"item_icon");
 		if(pIcon) pIcon->SetIcon(m_arrIcons[position].iIcon);
@@ -159,9 +159,9 @@ protected:
 		pItem->GetEventSet()->subscribeEvent(EventItemPanelClick::EventID,Subscriber(&CSkinTBAdapter::OnItemClick,this));
 	}
 
-	bool OnItemClick(EventArgs *e)
+	BOOL OnItemClick(IEvtArgs *e)
 	{
-		SItemPanel *pItem = sobj_cast<SItemPanel>(e->sender);
+		SItemPanel *pItem = sobj_cast<SItemPanel>(e->Sender());
 		int iItem = pItem->GetItemIndex();
 		m_pListener->OnInertSkin(&m_arrIcons[iItem]);
 		return true;
@@ -207,7 +207,7 @@ protected:
 protected:
 	//soui消息
 	bool OnTreeproContextMenu(CPoint pt);
-	void OnAutoCheck(EventArgs *e);
+	void OnAutoCheck(IEvtArgs *e);
 	void OnClose();
 	void OnMaximize();
 	void OnRestore();
@@ -220,8 +220,8 @@ protected:
 	void OnBtnResMgr();
 	void OnBtnAbout();
 	void OnBtnRecentFile();
-	void OnTreeItemDbClick(EventArgs *pEvtBase);
-	void OnWorkspaceXMLDbClick(EventArgs *pEvtBase);
+	void OnTreeItemDbClick(IEvtArgs *pEvtBase);
+	void OnWorkspaceXMLDbClick(IEvtArgs *pEvtBase);
 	EVENT_MAP_BEGIN()
 		if(m_pXmlEdtior) CHAIN_EVENT_MAP_MEMBER((*m_pXmlEdtior))
 		EVENT_NAME_COMMAND(L"btn_close", OnClose)

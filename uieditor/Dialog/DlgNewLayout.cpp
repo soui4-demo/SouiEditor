@@ -37,11 +37,11 @@ namespace SOUI
 		SHostDialog::OnOK();
 	}
 
-	void SDlgNewLayout::OnResNameInputNotify(EventArgs * e)
+	void SDlgNewLayout::OnResNameInputNotify(IEvtArgs * e)
 	{
 		EventRENotify *e2 = sobj_cast<EventRENotify>(e);
 		if (e2->iNotify != EN_CHANGE) return;
-		SEdit *pEdit = sobj_cast<SEdit>(e->sender);
+		SEdit *pEdit = sobj_cast<SEdit>(e->Sender());
 		SStringT resname = pEdit->GetWindowText();
 		m_edtPath->SetWindowText(m_strProPath + _T("\\xml\\") + resname + _T(".xml"));
 	}

@@ -14,11 +14,11 @@ int CLayoutAdapter::getCount()
 	return m_lstIndex.size();
 }
 
-void CLayoutAdapter::getView(int position, SWindow * pItem, pugi::xml_node xmlTemplate)
+void CLayoutAdapter::getView(int position, SItemPanel * pItem, SXmlNode xmlTemplate)
 {
 	if(pItem->GetChildrenCount()==0)
 	{
-		pItem->InitFromXml(xmlTemplate);
+		pItem->InitFromXml(&xmlTemplate);
 	}
 	SStatic *pTxtName = pItem->FindChildByID2<SStatic>(R.id.txt_name);
 	FILEPAIR & fp = m_lstLayout[m_lstIndex[position]];

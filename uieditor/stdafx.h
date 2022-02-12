@@ -15,6 +15,7 @@
 #include <control/souictrls.h>
 #include <res.mgr/sobjdefattr.h>
 #include <com-cfg.h>
+#include <SouiFactory.h>
 #include "resource.h"
 #include "FileHelper.h"
 #define R_IN_CPP	//定义这个开关来

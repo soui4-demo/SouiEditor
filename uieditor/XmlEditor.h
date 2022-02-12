@@ -36,7 +36,7 @@ namespace SOUI
 		void InsertText(SStringA strText);
 	protected:
 		//soui消息
-		void OnTCSelChanged(EventArgs *pEvt);
+		void OnTCSelChanged(IEvtArgs *pEvt);
 
 		EVENT_MAP_BEGIN()
 			EVENT_NAME_HANDLER(L"uidesigner_wnd_xmltree",EventTCSelChanged::EventID,OnTCSelChanged)

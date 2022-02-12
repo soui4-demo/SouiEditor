@@ -9,7 +9,7 @@ namespace SOUI
 {
 	class SDlgNewLayout: public SHostDialog
 	{
-		SOUI_CLASS_NAME(SDlgNewLayout, L"dlgnewlayout")
+		DEF_SOBJECT(SHostDialog, L"dlgnewlayout")
 	public:
 		SDlgNewLayout(LPCTSTR pszXmlName, SStringT strProPath);
 
@@ -32,7 +32,7 @@ namespace SOUI
 		void OnOK();
 		//void OnCancel();
 		//virtual SMessageLoop * GetMsgLoop(){return m_MsgLoop;}
-		void OnResNameInputNotify(EventArgs *e);
+		void OnResNameInputNotify(IEvtArgs *e);
 
 		EVENT_MAP_BEGIN()
 			EVENT_NAME_COMMAND(L"NAME_UIDESIGNER_btn_close", OnClose)

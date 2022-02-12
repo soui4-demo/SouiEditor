@@ -11,18 +11,18 @@ public:
 	{		
 	}
 
-	virtual int getCount()
+	int WINAPI getCount() override
 	{
 		return DEFAULT_LINE;
 	}
 
-	virtual void getView(int position, SWindow * pItem, pugi::xml_node xmlTemplate);
+	void WINAPI getView(int position, SItemPanel * pItem, SXmlNode xmlTemplate) override;
 
-	SStringW GetColumnName(int iCol) const;
+	SStringW WINAPI GetColumnName(int iCol) const override;
 
-	void InitColNames(pugi::xml_node xmlTemplate);
+	void WINAPI InitByTemplate(SXmlNode xmlTemplate) override;
 
-	virtual void InitByTemplate(pugi::xml_node xmlTemplate);
+	void InitColNames(SXmlNode xmlTemplate);
 };
 
 
@@ -44,22 +44,22 @@ public:
 	{	
 	}
 
-	virtual int getCount()
+	virtual int WINAPI getCount() override
 	{
 		return DEFAULT_LINE;
 	}
 	
-	int IniTemplateNames(pugi::xml_node xmlTemplate);
+	int IniTemplateNames(SXmlNode xmlTemplate);
 
-	virtual void InitByTemplate(pugi::xml_node xmlTemplate);
+	virtual void WINAPI InitByTemplate(SXmlNode xmlTemplate);
 
-	virtual int getViewTypeCount();
+	virtual int WINAPI getViewTypeCount();
 
-	virtual int getItemViewType(int position, DWORD dwState);
+	virtual int WINAPI getItemViewType(int position, DWORD dwState);
 
-	virtual SIZE getViewDesiredSize(int position, SWindow *pItem, LPCRECT prcContainer);
+	virtual SIZE WINAPI getViewDesiredSize(int position, SItemPanel *pItem, int wid,int hei);
 
-	virtual void getView(int position, SWindow * pItem, pugi::xml_node xmlTemplate);
+	virtual void WINAPI getView(int position, SItemPanel * pItem, SXmlNode xmlTemplate);
 };
 
 

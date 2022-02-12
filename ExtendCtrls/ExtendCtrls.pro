@@ -9,7 +9,7 @@ TARGET = $$TARGET"64"
 
 CONFIG += staticlib
 
-include($$(SOUI3PATH)/demo_com.pri)
+include($$(SOUI4PATH)/demo_com.pri)
 
 dir = ..
 CONFIG(debug, debug|release) {
@@ -31,57 +31,57 @@ else {
 }
 
 INCLUDEPATH += . \
-		$(SOUI3PATH)/controls.extend \
+		$(SOUI4PATH)/controls.extend \
 
 PRECOMPILED_HEADER = stdafx.h
 
 SOURCES+= SCtrlsRegister.cpp
-SOURCES+=$(SOUI3PATH)/controls.extend/image3d/3dlib.cpp
-SOURCES+=$(SOUI3PATH)/controls.extend/image3d/3dmatrix.cpp
-SOURCES+=$(SOUI3PATH)/controls.extend/image3d/3dtransform.cpp
-SOURCES+=$(SOUI3PATH)/controls.extend/ExtendSkins.cpp
-SOURCES+=$(SOUI3PATH)/controls.extend/SButtonEx.cpp
-SOURCES+=$(SOUI3PATH)/controls.extend/SChromeTabCtrl.cpp
-SOURCES+=$(SOUI3PATH)/controls.extend/SFreeMoveWindow.cpp
-SOURCES+=$(SOUI3PATH)/controls.extend/gif/SGifPlayer.cpp
-SOURCES+=$(SOUI3PATH)/controls.extend/SImageMaskWnd.cpp
-SOURCES+=$(SOUI3PATH)/controls.extend/gif/SSkinAPNG.cpp
-SOURCES+=$(SOUI3PATH)/controls.extend/gif/SSkinGif.cpp
-SOURCES+=$(SOUI3PATH)/controls.extend/STabCtrl2.cpp
-SOURCES+=$(SOUI3PATH)/controls.extend/SText.cpp
-SOURCES+=$(SOUI3PATH)/controls.extend/STurn3DView.cpp
-SOURCES+=$(SOUI3PATH)/controls.extend/SScrollText.cpp
-SOURCES+=$(SOUI3PATH)/controls.extend/SIPAddressCtrl.cpp
-SOURCES+=$(SOUI3PATH)/controls.extend/SListCtrlEx.cpp
-SOURCES+=$(SOUI3PATH)/controls.extend/SRatingBar.cpp
-SOURCES+=$(SOUI3PATH)/controls.extend/SRadioBox2.cpp
-SOURCES+=$(SOUI3PATH)/controls.extend/SMcListViewEx/SHeaderCtrlEx.cpp
-SOURCES+=$(SOUI3PATH)/controls.extend/SGroupList.cpp
-SOURCES+=$(SOUI3PATH)/controls.extend/SHexEdit.cpp
-SOURCES+=$(SOUI3PATH)/controls.extend/SByteArray.cpp
+SOURCES+=$(SOUI4PATH)/controls.extend/image3d/3dlib.cpp
+SOURCES+=$(SOUI4PATH)/controls.extend/image3d/3dmatrix.cpp
+SOURCES+=$(SOUI4PATH)/controls.extend/image3d/3dtransform.cpp
+SOURCES+=$(SOUI4PATH)/controls.extend/ExtendSkins.cpp
+SOURCES+=$(SOUI4PATH)/controls.extend/SButtonEx.cpp
+SOURCES+=$(SOUI4PATH)/controls.extend/SChromeTabCtrl.cpp
+SOURCES+=$(SOUI4PATH)/controls.extend/SFreeMoveWindow.cpp
+SOURCES+=$(SOUI4PATH)/controls.extend/gif/SGifPlayer.cpp
+SOURCES+=$(SOUI4PATH)/controls.extend/SImageMaskWnd.cpp
+SOURCES+=$(SOUI4PATH)/controls.extend/gif/SSkinAPNG.cpp
+SOURCES+=$(SOUI4PATH)/controls.extend/gif/SSkinGif.cpp
+SOURCES+=$(SOUI4PATH)/controls.extend/STabCtrl2.cpp
+SOURCES+=$(SOUI4PATH)/controls.extend/SText.cpp
+SOURCES+=$(SOUI4PATH)/controls.extend/STurn3DView.cpp
+SOURCES+=$(SOUI4PATH)/controls.extend/SScrollText.cpp
+SOURCES+=$(SOUI4PATH)/controls.extend/SIPAddressCtrl.cpp
+SOURCES+=$(SOUI4PATH)/controls.extend/SListCtrlEx.cpp
+SOURCES+=$(SOUI4PATH)/controls.extend/SRatingBar.cpp
+SOURCES+=$(SOUI4PATH)/controls.extend/SRadioBox2.cpp
+SOURCES+=$(SOUI4PATH)/controls.extend/SMcListViewEx/SHeaderCtrlEx.cpp
+SOURCES+=$(SOUI4PATH)/controls.extend/SGroupList.cpp
+SOURCES+=$(SOUI4PATH)/controls.extend/SHexEdit.cpp
+SOURCES+=$(SOUI4PATH)/controls.extend/SByteArray.cpp
 
 HEADERS+= SCtrlsRegister.h
-HEADERS+=$(SOUI3PATH)/controls.extend/image3d/3dlib.h
-HEADERS+=$(SOUI3PATH)/controls.extend/image3d/3dmatrix.h
-HEADERS+=$(SOUI3PATH)/controls.extend/image3d/3dTransform.h
-HEADERS+=$(SOUI3PATH)/controls.extend/ExtendSkins.h
-HEADERS+=$(SOUI3PATH)/controls.extend/image3d/PerspectiveTransform.h
-HEADERS+=$(SOUI3PATH)/controls.extend/SButtonEx.h
-HEADERS+=$(SOUI3PATH)/controls.extend/SChromeTabCtrl.h
-HEADERS+=$(SOUI3PATH)/controls.extend/SFreeMoveWindow.h
-HEADERS+=$(SOUI3PATH)/controls.extend/gif/SGifPlayer.h
-HEADERS+=$(SOUI3PATH)/controls.extend/SImageMaskWnd.h
-HEADERS+=$(SOUI3PATH)/controls.extend/gif/SSkinAPNG.h
-HEADERS+=$(SOUI3PATH)/controls.extend/gif/SSkinGif.h
-HEADERS+=$(SOUI3PATH)/controls.extend/STabCtrl2.h
-HEADERS+=$(SOUI3PATH)/controls.extend/SText.h
-HEADERS+=$(SOUI3PATH)/controls.extend/STurn3DView.h
-HEADERS+=$(SOUI3PATH)/controls.extend/SScrollText.h
-HEADERS+=$(SOUI3PATH)/controls.extend/SIPAddressCtrl.h
-HEADERS+=$(SOUI3PATH)/controls.extend/SListCtrlEx.h
-HEADERS+=$(SOUI3PATH)/controls.extend/SRatingBar.h
-HEADERS+=$(SOUI3PATH)/controls.extend/SRadioBox2.h
-HEADERS+=$(SOUI3PATH)/controls.extend/SMcListViewEx/SHeaderCtrlEx.h
-HEADERS+=$(SOUI3PATH)/controls.extend/SGroupList.h
-HEADERS+=$(SOUI3PATH)/controls.extend/SHexEdit.h
-HEADERS+=$(SOUI3PATH)/controls.extend/SByteArray.h
+HEADERS+=$(SOUI4PATH)/controls.extend/image3d/3dlib.h
+HEADERS+=$(SOUI4PATH)/controls.extend/image3d/3dmatrix.h
+HEADERS+=$(SOUI4PATH)/controls.extend/image3d/3dTransform.h
+HEADERS+=$(SOUI4PATH)/controls.extend/ExtendSkins.h
+HEADERS+=$(SOUI4PATH)/controls.extend/image3d/PerspectiveTransform.h
+HEADERS+=$(SOUI4PATH)/controls.extend/SButtonEx.h
+HEADERS+=$(SOUI4PATH)/controls.extend/SChromeTabCtrl.h
+HEADERS+=$(SOUI4PATH)/controls.extend/SFreeMoveWindow.h
+HEADERS+=$(SOUI4PATH)/controls.extend/gif/SGifPlayer.h
+HEADERS+=$(SOUI4PATH)/controls.extend/SImageMaskWnd.h
+HEADERS+=$(SOUI4PATH)/controls.extend/gif/SSkinAPNG.h
+HEADERS+=$(SOUI4PATH)/controls.extend/gif/SSkinGif.h
+HEADERS+=$(SOUI4PATH)/controls.extend/STabCtrl2.h
+HEADERS+=$(SOUI4PATH)/controls.extend/SText.h
+HEADERS+=$(SOUI4PATH)/controls.extend/STurn3DView.h
+HEADERS+=$(SOUI4PATH)/controls.extend/SScrollText.h
+HEADERS+=$(SOUI4PATH)/controls.extend/SIPAddressCtrl.h
+HEADERS+=$(SOUI4PATH)/controls.extend/SListCtrlEx.h
+HEADERS+=$(SOUI4PATH)/controls.extend/SRatingBar.h
+HEADERS+=$(SOUI4PATH)/controls.extend/SRadioBox2.h
+HEADERS+=$(SOUI4PATH)/controls.extend/SMcListViewEx/SHeaderCtrlEx.h
+HEADERS+=$(SOUI4PATH)/controls.extend/SGroupList.h
+HEADERS+=$(SOUI4PATH)/controls.extend/SHexEdit.h
+HEADERS+=$(SOUI4PATH)/controls.extend/SByteArray.h

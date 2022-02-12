@@ -56,8 +56,7 @@ BOOL CMainDlg::OnInitDialog(HWND hWnd, LPARAM lParam)
 
 	//======================================================================
 	m_pXmlEdtior = new CXmlEditor(this);
-	m_pXmlEdtior->Init(this,this);
-
+	m_pXmlEdtior->Init(GetRoot(),this);
 	SStringT strCfgDir = g_CurDir + "Config";
 	SApplication::getSingleton().SetFilePrefix(strCfgDir);
 	g_SysDataMgr.LoadSysData(strCfgDir);
@@ -205,7 +204,7 @@ void CMainDlg::OnSize(UINT nType, CSize size)
 
 void CMainDlg::OnShowWindow(BOOL bShow, UINT nStatus)
 {
-	__super::OnShowWindow(bShow, nStatus);
+	SetMsgHandled(FALSE);
 	if (bShow && !m_cmdWorkspaceFile.IsEmpty())
 	{
 		OpenProject(m_cmdWorkspaceFile);
@@ -302,7 +301,7 @@ void CMainDlg::OpenProject(SStringT strFileName)
 	if (!FileIsExist(strFileName))
 	{
 		SStringT notestr;
-		notestr.Format(_T("未能打开 %s, \n是否从最近列表中移除对它的引用?"), strFileName);
+		notestr.Format(_T("未能打开 %s, \n是否从最近列表中移除对它的引用?"), strFileName.c_str());
 		if (SMessageBox(NULL, notestr, _T("提示"), MB_YESNO) == IDYES)
 		{
 			std::vector<SStringT>::iterator it = std::find(m_vecRecentFile.begin(), m_vecRecentFile.end(), strFileName);
@@ -479,12 +478,12 @@ void CMainDlg::OnBtnAbout()
 void CMainDlg::OnBtnRecentFile()
 {
 	CRect rect = m_btn_recentFile->GetWindowRect();
-	ClientToScreen(&rect);
+	ClientToScreen2(&rect);
 
 	m_RecentFileMenu.TrackPopupMenu(0, rect.left, rect.bottom, m_hWnd);
 }
 
-void CMainDlg::OnTreeItemDbClick(EventArgs *pEvtBase)
+void CMainDlg::OnTreeItemDbClick(IEvtArgs *pEvtBase)
 {
 	EventTCDbClick *pEvt = (EventTCDbClick*)pEvtBase;
 	STreeCtrl *tree = (STreeCtrl*)pEvt->sender;
@@ -503,7 +502,7 @@ void CMainDlg::OnTreeItemDbClick(EventArgs *pEvtBase)
 
 
 // 双击打开文件
-void CMainDlg::OnWorkspaceXMLDbClick(EventArgs * pEvtBase)
+void CMainDlg::OnWorkspaceXMLDbClick(IEvtArgs * pEvtBase)
 {
 	EventLBDbClick *pEvt = (EventLBDbClick*)pEvtBase;
 	SListBox *listbox = (SListBox*)pEvt->sender;
@@ -629,10 +628,10 @@ void CMainDlg::OnInertSkin(CSkinTBAdapter::IconInfo * info)
 	}
 }
 
-void CMainDlg::OnAutoCheck(EventArgs *e)
+void CMainDlg::OnAutoCheck(IEvtArgs *e)
 {
 	EventSwndStateChanged *e2=sobj_cast<EventSwndStateChanged>(e);
-	if(e2->CheckState(WndState_Check))
+	if(EventSwndStateChanged_CheckState(e2,WndState_Check))
 	{
 		m_bAutoSave = e2->dwNewState&WndState_Check;
 	}

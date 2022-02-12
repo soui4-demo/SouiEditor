@@ -3,23 +3,17 @@ namespace SOUI
 {
 	#define EVT_TB_ITEMCLICK (EVT_EXTERNAL_BEGIN+500)
 
-	class EventToolBarCmd : public TplEventArgs<EventToolBarCmd>
-	{
-		SOUI_CLASS_NAME(EventToolBarCmd,L"on_toolbar_cmd")
-	public:
-		EventToolBarCmd(SObject *pWnd):TplEventArgs<EventToolBarCmd>(pWnd){}
-		enum{EventID=EVT_TB_ITEMCLICK};
-
+	DEF_EVT_EXT(EventToolBarCmd,EVT_TB_ITEMCLICK,{
 		int iItem;
 		int nCmdId;
 		SStringT strText;
 		LPARAM lParam;
-	};
+	});
 
 
 	class SToolBar : public SWindow
 	{
-		SOUI_CLASS_NAME(SToolBar,L"toolbar")
+		DEF_SOBJECT(SWindow,L"toolbar")
 	public:
 		SToolBar(void);
 		~SToolBar(void);
@@ -33,7 +27,7 @@ namespace SOUI
 			SStringT strText;
 			SStringT strTip;
 			int dwState;
-			SAutoRefPtr<IBitmap> icon;
+			SAutoRefPtr<IBitmapS> icon;
 		};
 
 		void InsertItem(const ToolBarItem & item,int nPos=-1);
@@ -55,7 +49,7 @@ namespace SOUI
 		virtual void DrawItem(IRenderTarget *pRT,const CRect &rc,const ToolBarItem * pItem);
 		virtual void DrawDropButton(IRenderTarget *pRT,const CRect &rc,DWORD dwState);
 		virtual BOOL CreateChildren(pugi::xml_node xmlNode);
-		virtual CSize GetDesiredSize(int nParentWid,int nParentHei);
+		virtual SIZE WINAPI GetDesiredSize(int nParentWid,int nParentHei);
 		virtual BOOL OnUpdateToolTip(CPoint pt, SwndToolTipInfo &tipInfo);
 	protected:
 		void OnPaint(IRenderTarget *pRT);
@@ -92,7 +86,7 @@ namespace SOUI
 		SAutoRefPtr<ISkinObj> m_skinDropArrow;
 		BOOL				  m_bShowText;
 		int					  m_nItemSize;
-		pugi::xml_document	  m_menuStyle;
+		SXmlDoc	  m_menuStyle;
 		SArray<ToolBarItem> m_arrItems;
 
 		int					m_iClickItem;

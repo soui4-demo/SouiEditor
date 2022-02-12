@@ -59,7 +59,7 @@ namespace SOUI
 		InvalidateRect(NULL);
 	}
 
-	CSize SSwitch::GetDesiredSize( LPCRECT pRcContainer )
+	SIZE SSwitch::GetDesiredSize( int wid,int hei )
 	{
 		CSize szRet;
 		if(m_pSkin) szRet=m_pSkin->GetSkinSize();

@@ -7,7 +7,7 @@ CONFIG(x64){
 TARGET = $$TARGET"64"
 }
 
-include($$(SOUI3PATH)/demo_com.pri)
+include($$(SOUI4PATH)/demo_com.pri)
 
 dir = ..
 CONFIG(debug, debug|release) {
@@ -30,14 +30,14 @@ else {
 
 
 INCLUDEPATH += . \
-		$(SOUI3PATH)/controls.extend \
-		$(SOUI3PATH)/third-part/Scintilla/include \
+		$(SOUI4PATH)/controls.extend \
+		$(SOUI4PATH)/third-part/Scintilla/include \
 
 CONFIG(debug,debug|release){
-	LIBS += utilitiesd.lib soui3d.lib  ExtendCtrlsd.lib
+	LIBS += utilities4d.lib soui4d.lib  ExtendCtrlsd.lib
 }
 else{
-	LIBS += utilities.lib soui3.lib  ExtendCtrls.lib
+	LIBS += utilities4.lib soui4.lib  ExtendCtrls.lib
 }
 LIBPATH += $$DESTDIR
 

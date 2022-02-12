@@ -16,12 +16,12 @@ namespace SOUI{
 		SStringA GetXml() const;
 	protected:
 		void OnGetValue(IPropertyItem *pItem,BOOL bInsertXml);
-		void OnPropToolbarCmd(EventArgs *e);
+		void OnPropToolbarCmd(IEvtArgs *e);
 
-		void OnPropValueChanged(EventArgs *e);
-		void OnPropItemActive(EventArgs *e);
-		void OnPropItemButtonClick(EventArgs *e);
-		void OnPropItemInplaceInit(EventArgs *e);
+		void OnPropValueChanged(IEvtArgs *e);
+		void OnPropItemActive(IEvtArgs *e);
+		void OnPropItemButtonClick(IEvtArgs *e);
+		void OnPropItemInplaceInit(IEvtArgs *e);
 
 		EVENT_MAP_BEGIN()
 			EVENT_HANDLER(EventPropGridValueChanged::EventID,OnPropValueChanged)

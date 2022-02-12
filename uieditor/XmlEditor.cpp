@@ -156,7 +156,7 @@ bool CXmlEditor::UpdateXmlStruct(spugi::xml_node xmlNode, HSTREEITEM item,int iS
 }
 
 // 响应窗口结构中点击选中界面元素
-void CXmlEditor::OnTCSelChanged(EventArgs *pEvt)
+void CXmlEditor::OnTCSelChanged(IEvtArgs *pEvt)
 {
 	EventTCSelChanged *evt = (EventTCSelChanged*)pEvt;
 	HSTREEITEM item = evt->hNewSel;

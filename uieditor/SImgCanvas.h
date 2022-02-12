@@ -4,7 +4,7 @@ namespace SOUI
 {
     class SImgCanvas : public SWindow
     {
-        SOUI_CLASS_NAME(SImgCanvas, L"imgcanvas")
+        DEF_SOBJECT(SWindow, L"imgcanvas")
     public:
         SImgCanvas(void);
         ~SImgCanvas(void);
@@ -28,6 +28,6 @@ namespace SOUI
         SOUI_MSG_MAP_END()
         
         BOOL            m_bVert;
-        SList<IBitmap*> m_lstImg;
+        SList<IBitmapS*> m_lstImg;
     };
 }

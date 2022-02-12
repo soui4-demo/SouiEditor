@@ -5,12 +5,12 @@ namespace SOUI
 {
 	class  SSwitch : public SWindow
 	{
-		SOUI_CLASS_NAME(SSwitch,L"switch")
+		DEF_SOBJECT(SWindow,L"switch")
 	public:
 		SSwitch();
 		~SSwitch();
 	protected://SWindow的虚函数
-		virtual CSize GetDesiredSize(LPCRECT pRcContainer);
+		virtual SIZE WINAPI GetDesiredSize(int wid,int hei);
 	public://属性处理
 		BOOL IsOpen() {return m_BOpen;}
 	protected://消息处理，SOUI控件的消息处理和WTL，MFC很相似，采用相似的映射表，相同或者相似的消息映射宏

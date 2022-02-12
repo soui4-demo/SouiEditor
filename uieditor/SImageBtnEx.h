@@ -6,7 +6,7 @@ namespace SOUI
 {
 	class SImageBtnEx :public SImageButton
 	{
-		SOUI_CLASS_NAME(SSwitch, L"imgbtnex")
+		DEF_SOBJECT(SImageButton, L"imgbtnex")
 	public:
 		SImageBtnEx() :m_IconOffsetX(5), m_IconOffsetY(8), m_TextOffsetX(0), m_TextOffsetY(18), m_pIcon(NULL)
 		{
@@ -26,6 +26,6 @@ namespace SOUI
 		SOUI_ATTRS_BEGIN()
 			ATTR_SKIN(L"icon", m_pIcon, TRUE)
 			ATTR_STRINGT(L"text", m_strText, FALSE)
-			SOUI_ATTRS_END()
+		SOUI_ATTRS_END()
 	};
 }

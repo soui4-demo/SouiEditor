@@ -4,11 +4,11 @@
 #include "Adapter.h"
 #include "PreviewHost.h"
 
-void CBaseMcAdapterFix::getView(int position, SWindow * pItem, pugi::xml_node xmlTemplate)
+void CBaseMcAdapterFix::getView(int position, SItemPanel * pItem, SXmlNode xmlTemplate)
 {
 	if (pItem->GetChildrenCount() == 0)
 	{
-		pItem->InitFromXml(xmlTemplate);
+		pItem->InitFromXml(&xmlTemplate);
 	}
 }
 
@@ -19,7 +19,7 @@ SStringW CBaseMcAdapterFix::GetColumnName(int iCol) const {
 	return m_colNames[iCol];
 }
 
-void CBaseMcAdapterFix::InitColNames(pugi::xml_node xmlTemplate)
+void CBaseMcAdapterFix::InitColNames(SXmlNode xmlTemplate)
 {
 	for (xmlTemplate = xmlTemplate.first_child(); xmlTemplate; xmlTemplate = xmlTemplate.next_sibling())
 	{
@@ -39,7 +39,7 @@ void CBaseMcAdapterFix::InitColNames(pugi::xml_node xmlTemplate)
 	}
 }
 
-void CBaseMcAdapterFix::InitByTemplate(pugi::xml_node xmlTemplate)
+void CBaseMcAdapterFix::InitByTemplate(SXmlNode xmlTemplate)
 {
 	InitColNames(xmlTemplate);
 }
@@ -48,8 +48,7 @@ void CBaseMcAdapterFix::InitByTemplate(pugi::xml_node xmlTemplate)
 
 
 //////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////
-int CBaseAdapterFix::IniTemplateNames(pugi::xml_node xmlTemplate)
+int CBaseAdapterFix::IniTemplateNames(SXmlNode xmlTemplate)
 {
 	for (xmlTemplate = xmlTemplate.first_child(); xmlTemplate; xmlTemplate = xmlTemplate.next_sibling())
 	{
@@ -66,7 +65,7 @@ int CBaseAdapterFix::IniTemplateNames(pugi::xml_node xmlTemplate)
 	return m_TemplateNames.GetCount();
 }
 
-void CBaseAdapterFix::InitByTemplate(pugi::xml_node xmlTemplate)
+void CBaseAdapterFix::InitByTemplate(SXmlNode xmlTemplate)
 {
 	if (IniTemplateNames(xmlTemplate) > 0)
 	{
@@ -96,23 +95,23 @@ int CBaseAdapterFix::getItemViewType(int position, DWORD dwState)
 	return __super::getItemViewType(position, dwState);
 }
 
-SIZE CBaseAdapterFix::getViewDesiredSize(int position, SWindow *pItem, LPCRECT prcContainer)
+SIZE CBaseAdapterFix::getViewDesiredSize(int position, SItemPanel *pItem, int wid,int hei)
 {
 	DWORD dwState = pItem->GetState();
 	int viewType = getItemViewType(position, dwState);
 	return CSize(0, m_nItemHeight[viewType]);//cx在listview，mclistview中没有使用，不需要计算
 }
 
-void CBaseAdapterFix::getView(int position, SWindow * pItem, pugi::xml_node xmlTemplate)
+void CBaseAdapterFix::getView(int position, SItemPanel * pItem, SXmlNode xmlTemplate)
 {
 	if (pItem->GetChildrenCount() == 0)
 	{
 		if (m_TemplateNames.GetCount() == 0)
-			pItem->InitFromXml(xmlTemplate);
+			pItem->InitFromXml(&xmlTemplate);
 		else
 		{
 			int nViewType = getItemViewType(position, pItem->GetState());
-			pItem->InitFromXml(xmlTemplate.child(m_TemplateNames[nViewType < m_TemplateNames.GetCount() - 1 ? nViewType : m_TemplateNames.GetCount() - 1]));
+			pItem->InitFromXml(&xmlTemplate.child(m_TemplateNames[nViewType < m_TemplateNames.GetCount() - 1 ? nViewType : m_TemplateNames.GetCount() - 1]));
 		}
 	}
 }

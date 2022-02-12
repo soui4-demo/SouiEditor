@@ -25,9 +25,9 @@ namespace SOUI
 		void OnAddResource();		
 		void OnRemoveResource();
 
-		bool OnLbResTypeSelChanged(EventArgs *pEvtBase);
-		bool OnLvResSelChanged(EventArgs *pEvtBase);
-		bool OnReNotify(EventArgs *pEvt);
+		BOOL OnLbResTypeSelChanged(IEvtArgs *pEvtBase);
+		BOOL OnLvResSelChanged(IEvtArgs *pEvtBase);
+		BOOL OnReNotify(IEvtArgs *pEvt);
 
 		void OnOK();
 

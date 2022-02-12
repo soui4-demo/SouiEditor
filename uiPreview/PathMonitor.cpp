@@ -24,7 +24,7 @@ UINT CPathMonitor::Run()
 			{
 				break;
 			}
-			STaskHelper::post(m_pMainDlg->GetContainer()->GetMsgLoop(),m_pMainDlg,&CMainDlg::OnFileChanged);
+			STaskHelper::post(m_pMainDlg->GetMsgLoop(),m_pMainDlg,&CMainDlg::OnFileChanged);
 			if(!FindNextChangeNotification(h))
 			{
 				break;

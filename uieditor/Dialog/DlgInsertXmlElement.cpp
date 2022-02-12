@@ -55,7 +55,7 @@ namespace SOUI{
 		return TRUE;
 	}
 
-	void DlgInsertXmlElement::OnPropValueChanged(EventArgs *e)
+	void DlgInsertXmlElement::OnPropValueChanged(IEvtArgs *e)
 	{
 		EventPropGridValueChanged *e2=sobj_cast<EventPropGridValueChanged>(e);
 		OnGetValue(e2->pItem,TRUE);
@@ -136,7 +136,7 @@ namespace SOUI{
 		}
 	}
 
-	void DlgInsertXmlElement::OnPropItemActive(EventArgs *e)
+	void DlgInsertXmlElement::OnPropItemActive(IEvtArgs *e)
 	{
 		EventPropGridItemActive *e2=sobj_cast<EventPropGridItemActive>(e);
 		FindChildByID(R.id.txt_prop_title)->SetWindowText(e2->pItem->GetTitle());
@@ -167,7 +167,7 @@ namespace SOUI{
 		m_propgrid->LoadFromXml(xmlNode.child(L"groups"));
 	}
 
-	void DlgInsertXmlElement::OnPropToolbarCmd(EventArgs *e)
+	void DlgInsertXmlElement::OnPropToolbarCmd(IEvtArgs *e)
 	{
 		EventToolBarCmd *e2=sobj_cast<EventToolBarCmd>(e);
 		if(e2->nCmdId == 0)
@@ -183,7 +183,7 @@ namespace SOUI{
 		}
 	}
 
-	void DlgInsertXmlElement::OnPropItemButtonClick(EventArgs *e)
+	void DlgInsertXmlElement::OnPropItemButtonClick(IEvtArgs *e)
 	{
 		EventPropGridItemButtonClick *e2 = sobj_cast<EventPropGridItemButtonClick>(e);
 		SStringW strExType = e2->pItem->GetExtendType();
@@ -214,7 +214,7 @@ namespace SOUI{
 		}
 	}
 
-	void DlgInsertXmlElement::OnPropItemInplaceInit(EventArgs *e)
+	void DlgInsertXmlElement::OnPropItemInplaceInit(IEvtArgs *e)
 	{
 		EventPropGridItemInplaceInit *e2 = sobj_cast<EventPropGridItemInplaceInit>(e);
 		if(e2->pItem->IsClass(SPropertyItemOption::GetClassName()))

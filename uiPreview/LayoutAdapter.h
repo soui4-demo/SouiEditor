@@ -2,7 +2,8 @@
 #include <vector>
 #include <helper/SAdapterBase.h>
 
-class CLayoutAdapter : public SAdapterBase
+
+class CLayoutAdapter : public SOUI::SAdapterBase
 {
 	typedef std::pair<SStringT,SStringT> FILEPAIR;
 	typedef std::vector<FILEPAIR> LAYOUTLIST;
@@ -22,8 +23,8 @@ public:
 	SStringT GetName(int iItem) const;
 	SStringT GetDir() const;
 protected:
-	virtual int getCount();
+	virtual int WINAPI getCount() override;
 
-	virtual void getView(int position, SWindow * pItem, pugi::xml_node xmlTemplate);
+	virtual void WINAPI getView(int position, SItemPanel * pItem, SXmlNode xmlTemplate) override;
 
 };

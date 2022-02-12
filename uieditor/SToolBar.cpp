@@ -54,7 +54,7 @@ namespace SOUI
 		return TRUE;
 	}
 
-	CSize SToolBar::GetDesiredSize(int nParentWid,int nParentHei)
+	SIZE SToolBar::GetDesiredSize(int nParentWid,int nParentHei)
 	{		
 		CSize szRet = __super::GetDesiredSize(nParentWid,nParentHei);
 		ILayoutParam * pLayoutParam = GetLayoutParam();
@@ -212,7 +212,7 @@ namespace SOUI
 
 	void SToolBar::DrawItem(IRenderTarget *pRT,const CRect &rcItem,const ToolBarItem * pItem)
 	{
-		pRT->PushClipRect(rcItem);
+		pRT->PushClipRect(rcItem,RGN_AND);
 		if(IsSeparator(pItem))
 		{
 			if(m_skinSep)
@@ -242,7 +242,7 @@ namespace SOUI
 				rcIcon.OffsetRect(-szIcon.cx/2,0);
 				rcIcon.MoveToY(rcItem.top + nInter);
 				if(pItem->icon)
-					pRT->DrawBitmapEx(rcIcon,pItem->icon,CRect(CPoint(),szIcon),EM_STRETCH);
+					pRT->DrawBitmapEx(rcIcon,pItem->icon,CRect(CPoint(),szIcon),EM_STRETCH,0xff);
 				else if(m_skinIcons && pItem->iIcon>=0)
 					m_skinIcons->DrawByIndex(pRT,rcIcon,pItem->iIcon);
 
@@ -256,7 +256,7 @@ namespace SOUI
 				CRect rcIcon(rcItem.CenterPoint(),szIcon);
 				rcIcon.OffsetRect(-szIcon.cx/2,-szIcon.cy/2);
 				if(pItem->icon)
-					pRT->DrawBitmapEx(rcIcon,pItem->icon,CRect(CPoint(),szIcon),EM_STRETCH);
+					pRT->DrawBitmapEx(rcIcon,pItem->icon,CRect(CPoint(),szIcon),EM_STRETCH,0xff);
 				else if(m_skinIcons && pItem->iIcon>=0)
 					m_skinIcons->DrawByIndex(pRT,rcIcon,pItem->iIcon);
 			}

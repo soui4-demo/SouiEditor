@@ -5,7 +5,7 @@
 CPreviewContainer::CPreviewContainer(LPCTSTR pszLayoutId, HWND hEditor)
 :m_previewHost(this,pszLayoutId,hEditor)
 {
-	m_hBgBmp = LoadBitmap(SApplication::getSingleton().GetInstance(),MAKEINTRESOURCE(IDB_BKGND));
+	m_hBgBmp = LoadBitmap(SApplication::getSingleton().GetModule(),MAKEINTRESOURCE(IDB_BKGND));
 }
 
 CPreviewContainer::~CPreviewContainer(void)
@@ -35,7 +35,7 @@ int CPreviewContainer::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	SetScrollMax(KCanvas_Size, KCanvas_Size);
 
-	m_previewHost.Create(m_hWnd,WS_CHILD|WS_VISIBLE|WS_CLIPCHILDREN,0,0,0,0,0);
+	m_previewHost.CreateNative(NULL,WS_CHILD|WS_VISIBLE|WS_CLIPCHILDREN,0,0,0,0,0,m_hWnd,0,NULL);
 	CRect rcPreview = m_previewHost.GetWindowRect();
 
 	CRect rcHost;

@@ -37,7 +37,7 @@ NodeRange CXmlParser::getNodePos(int *nodePos,int nLen)
 		{
 			do{
 				child = child.next_sibling();
-			}while(child && child.type()!=node_element);
+			}while(child && child.type()!=spugi::node_element);
 		}
 		selNode = child;
 		if(!selNode)
@@ -57,7 +57,7 @@ NodeRange CXmlParser::getNodePos(int *nodePos,int nLen)
 
 void CXmlParser::on_node_begin(spugi::xml_node node,int pos)
 {
-	if(node.type() == node_element)
+	if(node.type() == spugi::node_element)
 	{
 		NodeRange *pRange = new NodeRange;
 		pRange->begin = pos;
@@ -68,7 +68,7 @@ void CXmlParser::on_node_begin(spugi::xml_node node,int pos)
 
 void CXmlParser::on_node_break(xml_node node,int pos)
 {
-	if(node.type() == node_element)
+	if(node.type() == spugi::node_element)
 	{
 		NodeRange *pRange =(NodeRange *)node.get_userdata();
 		pRange->_break = pos;
@@ -80,7 +80,7 @@ void CXmlParser::on_node_break(xml_node node,int pos)
 
 void CXmlParser::on_node_end(spugi::xml_node node,int pos)
 {
-	if(node.type() == node_element)
+	if(node.type() == spugi::node_element)
 	{
 		NodeRange *pRange =(NodeRange *)node.get_userdata();
 		pRange->end = pos;
@@ -92,7 +92,7 @@ void CXmlParser::on_node_end(spugi::xml_node node,int pos)
 
 void CXmlParser::on_node_free(spugi::xml_node node)
 {
-	if(node.type() == node_element)
+	if(node.type() == spugi::node_element)
 	{
 		NodeRange *pRange = (NodeRange *)node.get_userdata();
 		if(pRange) delete pRange;

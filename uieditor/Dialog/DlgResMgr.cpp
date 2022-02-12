@@ -94,16 +94,16 @@ namespace SOUI
 			return -1;
 		}
 	protected:
-		virtual int getCount()
+		virtual int WINAPI getCount()
 		{
 			return m_arrFilters.GetCount();
 		}
 
-		virtual void getView(int position, SWindow * pItem, pugi::xml_node xmlTemplate)
+		virtual void WINAPI getView(int position, SItemPanel * pItem, SXmlNode xmlTemplate)
 		{
 			if(pItem->GetChildrenCount()==0)
 			{
-				pItem->InitFromXml(xmlTemplate);
+				pItem->InitFromXml(&xmlTemplate);
 			}
 			SStatic *pTxtName = pItem->FindChildByName2<SStatic>(L"txt_name");
 			if(pTxtName) pTxtName->SetWindowText(m_arrFiles[m_arrFilters[position]].strName);
@@ -161,7 +161,7 @@ namespace SOUI
 
 		while (xmlNode)
 		{
-			if (xmlNode.type() != pugi::node_element)
+			if (xmlNode.type() != node_element)
 			{
 				xmlNode = xmlNode.next_sibling();
 				continue;
@@ -173,7 +173,7 @@ namespace SOUI
 		}
 	}
 
-	bool SResMgrDlg::OnLbResTypeSelChanged(EventArgs *pEvtBase)
+	BOOL SResMgrDlg::OnLbResTypeSelChanged(IEvtArgs *pEvtBase)
 	{
 		EventLBSelChanged *pEvt = (EventLBSelChanged*)pEvtBase;
 		SListBox *listbox = (SListBox*)pEvt->sender;
@@ -190,7 +190,7 @@ namespace SOUI
 		return true;
 	}
 
-	bool SResMgrDlg::OnLvResSelChanged(EventArgs *pEvtBase)
+	BOOL SResMgrDlg::OnLvResSelChanged(IEvtArgs *pEvtBase)
 	{
 		m_imgView->Clear();
 		m_txtImageSize->SetWindowText(L"");
@@ -404,7 +404,7 @@ namespace SOUI
 		return lb->GetText(n);
 	}
 
-	bool SResMgrDlg::OnReNotify(EventArgs *pEvt)
+	BOOL SResMgrDlg::OnReNotify(IEvtArgs *pEvt)
 	{
 		EventRENotify *pReEvt = (EventRENotify*)pEvt;
 		if (pReEvt->iNotify == EN_CHANGE)

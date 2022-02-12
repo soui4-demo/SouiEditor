@@ -39,7 +39,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
     SASSERT(SUCCEEDED(hRes));
 
     int nRet = 0;
-    
+    SouiFactory souiFac;
     SComMgr *pComMgr = new SComMgr;
 
     //将程序的运行路径修改到项目所在目录所在的目录
@@ -87,7 +87,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
         if (hModSysResource)
         {
             SAutoRefPtr<IResProvider> sysResProvider;
-            CreateResProvider(RES_PE, (IObjRef**)&sysResProvider);
+            souiFac.CreateResProvider(RES_PE, (IObjRef**)&sysResProvider);
             sysResProvider->Init((WPARAM)hModSysResource, 0);
             theApp->LoadSystemNamedResource(sysResProvider);
             FreeLibrary(hModSysResource);
@@ -105,7 +105,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
             return 1;
         }
 #else 
-        CreateResProvider(RES_PE, (IObjRef**)&pResProvider);
+        souiFac.CreateResProvider(RES_PE, (IObjRef**)&pResProvider);
         pResProvider->Init((WPARAM)hInstance, 0);
 #endif
 
@@ -114,8 +114,8 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
 
 		//读取自定义消息框布局
 		int ret = 0;
-		pugi::xml_document xmlDoc;
-		if (!theApp->LoadXmlDocment(xmlDoc, _T("LAYOUT:xml_messagebox")) || !SetMsgTemplate(xmlDoc.child(L"SOUI")))
+		SXmlDoc xmlDoc;
+		if (!theApp->LoadXmlDocment(xmlDoc, _T("LAYOUT:xml_messagebox")) || !SetMsgTemplate(xmlDoc.root().child(L"SOUI")))
 			ret = -1;
 		if (ret == -1)
 			SMessageBox(NULL, _T("【消息框皮肤】读取失败"), _T("提示"), 0);
