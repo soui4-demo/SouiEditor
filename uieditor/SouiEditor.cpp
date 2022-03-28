@@ -131,7 +131,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
             CMainDlg dlgMain;
 			if (cmdLine.GetParamCount() > 1)
 				dlgMain.m_cmdWorkspaceFile = cmdLine.GetParam(1);
-            dlgMain.Create(GetActiveWindow(), WS_CLIPCHILDREN | WS_TABSTOP | WS_POPUP, (DWORD)0);
+            dlgMain.Create(GetActiveWindow());
 			SetWindowText(dlgMain.m_hWnd,ksz_editor_wnd);
             dlgMain.SendMessage(WM_INITDIALOG);
             dlgMain.CenterWindow(dlgMain.m_hWnd);

@@ -32,6 +32,7 @@ else {
 INCLUDEPATH += . \
 		$(SOUI4PATH)/controls.extend \
 		$(SOUI4PATH)/third-part/Scintilla/include \
+		$(SOUI4PATH)/third-part/third-part/nanosvg/src \
 
 CONFIG(debug,debug|release){
 	LIBS += utilities4d.lib soui4d.lib  ExtendCtrlsd.lib
