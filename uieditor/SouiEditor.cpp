@@ -12,6 +12,9 @@
 #include "Global.h"
 #include "../ExtendCtrls/SCtrlsRegister.h"
 
+//定义唯一的一个R,UIRES对象,ROBJ_IN_CPP是resource.h中定义的宏。
+#define INIT_R_DATA
+#include "res\resource.h"
 
 //从PE文件加载，注意从文件加载路径位置
 #ifdef _DEBUG
@@ -26,8 +29,6 @@
 #define SYS_NAMED_RESOURCE _T("soui-sys-resource.dll")
 #endif
 	
-//定义唯一的一个R,UIRES对象,ROBJ_IN_CPP是resource.h中定义的宏。
-ROBJ_IN_CPP
 
 SStringT g_CurDir;
 void RegisterExtendControl(SApplication *theApp);
@@ -98,7 +99,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
 
         SAutoRefPtr<IResProvider>   pResProvider;
 #if (RES_TYPE == 0)
-        CreateResProvider(RES_FILE, (IObjRef**)&pResProvider);
+        souiFac.CreateResProvider(RES_FILE, (IObjRef**)&pResProvider);
         if (!pResProvider->Init((LPARAM)_T("uires"), 0))
         {
             SASSERT(0);
@@ -109,7 +110,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
         pResProvider->Init((WPARAM)hInstance, 0);
 #endif
 
-		theApp->InitXmlNamedID(namedXmlID, ARRAYSIZE(namedXmlID),TRUE);
+		theApp->InitXmlNamedID((const LPCWSTR*)&R.name, (const int*)&R.id,sizeof(R.id)/sizeof(int));
         theApp->AddResProvider(pResProvider);
 
 		//读取自定义消息框布局
@@ -131,7 +132,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
             CMainDlg dlgMain;
 			if (cmdLine.GetParamCount() > 1)
 				dlgMain.m_cmdWorkspaceFile = cmdLine.GetParam(1);
-            dlgMain.Create(GetActiveWindow(), WS_CLIPCHILDREN | WS_TABSTOP | WS_POPUP, (DWORD)0);
+            dlgMain.Create(GetActiveWindow());
 			SetWindowText(dlgMain.m_hWnd,ksz_editor_wnd);
             dlgMain.SendMessage(WM_INITDIALOG);
             dlgMain.CenterWindow(dlgMain.m_hWnd);

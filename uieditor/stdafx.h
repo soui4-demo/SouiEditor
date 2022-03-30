@@ -18,7 +18,6 @@
 #include <SouiFactory.h>
 #include "resource.h"
 #include "FileHelper.h"
-#define R_IN_CPP	//定义这个开关来
 #include "res\resource.h"
 #include <helper/SAdapterBase.h>
 
