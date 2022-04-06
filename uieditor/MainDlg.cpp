@@ -549,7 +549,7 @@ void CMainDlg::SendMsgToViewer(int msgid, const void* pMsgData, int msglen)
 			memcpy(pData, pMsgData, msglen);
 			cds.lpData = pData;
 		}
-		::SendMessage(m_hViewer, WM_COPYDATA, (WPARAM)m_hWnd, (LPARAM)&cds);
+		::SendMessageTimeout(m_hViewer, WM_COPYDATA, (WPARAM)m_hWnd, (LPARAM)&cds,0,100,NULL);
 		if (pData)
 			delete[] pData;
 	}
