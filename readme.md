@@ -3,7 +3,7 @@
 请将代码Clone到  SOUI目录/Demos\SouiEditor
 
 编译SouiEditor后, 需要将SouiEditor目录的**Config目录拷贝到SouiEditor可执行文件**所在目录.
-<--! 啥都不是-->
+
 **使用**
 
 运行后主界面如下图:
