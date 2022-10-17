@@ -11,7 +11,7 @@
 //#define  ONLYSHOWSELXML
 
 #define  MARGIN 20
-
+#define kLogTag "soui4editor"
 namespace SOUI{
 
 
@@ -115,7 +115,7 @@ void CXmlEditor::ReloadLayout()
 			m_pMainDlg->SendMsgToViewer(update_buf_id,strUtf8.c_str(),strUtf8.GetLength());
 	}
 	else
-		SLOG_INFO("error xml");
+		SLOGI()<<"error xml";
 }
 
 
@@ -189,7 +189,7 @@ void CXmlEditor::SelectCtrlByOrder(int *pOrder,int nLen)
 	{
 		str += SStringA().Format("%d,",pOrder[i]);
 	}
-	SLOG_INFO("order:"<<str);
+	SLOGI()<<"order:"<<str;
 	NodeRange range = m_xmlParser.getNodePos(pOrder,nLen);
 	if(range.begin!=-1)
 	{

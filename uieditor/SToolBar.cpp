@@ -563,7 +563,7 @@ namespace SOUI
 	{
 		SMenu menu;
 		menu.SetIconSkin(m_skinIcons);
-		menu.LoadMenu(m_menuStyle.root().child(L"menuStyle"));
+		menu.LoadMenu2(&m_menuStyle.root().child(L"menuStyle"));
  		for(int i=m_nVisibleItems;i<m_arrItems.GetCount();i++)
  		{
 			UINT uFlag = IsSeparator(&m_arrItems[i])?MF_SEPARATOR:MF_STRING;
