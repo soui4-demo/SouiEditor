@@ -53,14 +53,12 @@ void ResManger::ReleaseUIRes()
 
 void ResManger::SaveRes()
 {
-	if (!m_strUIResFile.Trim().IsEmpty())
+	m_strUIResFile.Trim();
+	if (!m_strUIResFile.IsEmpty())
 		m_xmlDocUiRes.save_file(m_strUIResFile);
-	if (!m_strSkinFile.Trim().IsEmpty())
+	m_strSkinFile.Trim();
+	if (!m_strSkinFile.IsEmpty())
 		m_xmlDocSkin.save_file(m_strSkinFile);
-// 	m_xmlDocString.save_file(m_strStringFile);
-// 	m_xmlDocColor.save_file(m_strColorFile);
-// 	m_xmlDocStyle.save_file(m_strStyleFile);
-// 	m_xmlDocObjattr.save_file(m_strObjattrFile);
 }
 
 pugi::xml_node ResManger::GetResFirstNode(const SStringT tagname)
@@ -211,7 +209,9 @@ SStringT ResManger::RemoveResTypename(const SStringT& resname)
 {
 	int nPos = resname.ReverseFind(':');
 	if (nPos == -1)	nPos = 0;
-	return resname.Mid(nPos + 1).Trim();
+	SStringT name = resname.Mid(nPos + 1);
+	name.Trim();
+	return name;
 }
 
 SStringT ResManger::GetResPathByName(const SStringT& resname)

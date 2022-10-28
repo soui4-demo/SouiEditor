@@ -88,7 +88,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
         if (hModSysResource)
         {
             SAutoRefPtr<IResProvider> sysResProvider;
-            souiFac.CreateResProvider(RES_PE, (IObjRef**)&sysResProvider);
+            sysResProvider.Attach(souiFac.CreateResProvider(RES_PE));
             sysResProvider->Init((WPARAM)hModSysResource, 0);
             theApp->LoadSystemNamedResource(sysResProvider);
             FreeLibrary(hModSysResource);
@@ -99,14 +99,14 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
 
         SAutoRefPtr<IResProvider>   pResProvider;
 #if (RES_TYPE == 0)
-        souiFac.CreateResProvider(RES_FILE, (IObjRef**)&pResProvider);
+		pResProvider.Attach(souiFac.CreateResProvider(RES_FILE));
         if (!pResProvider->Init((LPARAM)_T("uires"), 0))
         {
             SASSERT(0);
             return 1;
         }
 #else 
-        souiFac.CreateResProvider(RES_PE, (IObjRef**)&pResProvider);
+        pResProvider.Attach(souiFac.CreateResProvider(RES_PE));
         pResProvider->Init((WPARAM)hInstance, 0);
 #endif
 
