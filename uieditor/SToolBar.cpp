@@ -54,38 +54,28 @@ namespace SOUI
 		return TRUE;
 	}
 
-	SIZE SToolBar::GetDesiredSize(int nParentWid,int nParentHei)
+	SIZE SToolBar::MeasureContent(int nParentWid,int nParentHei)
 	{		
-		CSize szRet = __super::GetDesiredSize(nParentWid,nParentHei);
-		ILayoutParam * pLayoutParam = GetLayoutParam();
-		if(pLayoutParam->IsWrapContent(Any))
-		{
-			CSize szItem;
-			if(m_skinState) 
-				szItem = m_skinState->GetSkinSize();
-			int nSep = GetSepWid();
-			int nSepCount=0;
-			for(UINT i=0;i<m_arrItems.GetCount();i++)
-				if(IsSeparator(&m_arrItems[i])) nSepCount++;
-			int nItemCount = m_arrItems.GetCount() - nSepCount;
+		CSize szItem;
+		if(m_skinState) 
+			szItem = m_skinState->GetSkinSize();
+		int nSep = GetSepWid();
+		int nSepCount=0;
+		for(UINT i=0;i<m_arrItems.GetCount();i++)
+			if(IsSeparator(&m_arrItems[i])) nSepCount++;
+		int nItemCount = m_arrItems.GetCount() - nSepCount;
 
-			CSize szContent;
-			if(m_bVert)
-			{
-				szContent.cx = szItem.cx;
-				szContent.cy = nItemCount*szItem.cy + nSep*nSepCount;
-			}else
-			{
-				szContent.cx = nItemCount*szItem.cx + nSep*nSepCount;
-				szContent.cy = szItem.cy;
-			}
-			
-			if(pLayoutParam->IsWrapContent(Horz))
-				szRet.cx = szContent.cx;
-			if(pLayoutParam->IsWrapContent(Vert))
-				szRet.cy = szContent.cy;
+		CSize szContent;
+		if(m_bVert)
+		{
+			szContent.cx = szItem.cx;
+			szContent.cy = nItemCount*szItem.cy + nSep*nSepCount;
+		}else
+		{
+			szContent.cx = nItemCount*szItem.cx + nSep*nSepCount;
+			szContent.cy = szItem.cy;
 		}
-		return szRet;
+		return szContent;
 	}
 
 	CSize SToolBar::GetItemSize() const

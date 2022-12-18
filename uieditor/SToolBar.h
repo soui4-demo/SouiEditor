@@ -49,7 +49,7 @@ namespace SOUI
 		virtual void DrawItem(IRenderTarget *pRT,const CRect &rc,const ToolBarItem * pItem);
 		virtual void DrawDropButton(IRenderTarget *pRT,const CRect &rc,DWORD dwState);
 		virtual BOOL CreateChildren(pugi::xml_node xmlNode);
-		virtual SIZE WINAPI GetDesiredSize(int nParentWid,int nParentHei);
+		virtual SIZE MeasureContent(int nParentWid,int nParentHei);
 		virtual BOOL OnUpdateToolTip(CPoint pt, SwndToolTipInfo &tipInfo);
 	protected:
 		void OnPaint(IRenderTarget *pRT);
