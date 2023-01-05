@@ -33,6 +33,9 @@ NodeRange CXmlParser::getNodePos(int *nodePos,int nLen)
 	for(int i=0;i<nLen;i++)
 	{
 		xml_node child = selNode.first_child();
+		while(child && child.type()!=spugi::node_element){
+			child = child.next_sibling();
+		}
 		for(int j=0;j<nodePos[i];j++)
 		{
 			do{
