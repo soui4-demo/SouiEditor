@@ -33,15 +33,18 @@ public:
 	struct IListener{
 		virtual void OnInsertWidget(IconInfo *info) = 0;
 	};
+	SAutoRefPtr<SSkinPool> m_skinPool;
 public:
 	CWidgetTBAdapter(SXmlNode xmlNode,IListener* pListener):m_pListener(pListener)
 	{
+		m_skinPool.Attach(new SSkinPool());
+		SUiDef::getSingleton().PushSkinPool(m_skinPool);
 		SXmlNode xmlIconSkin = xmlNode.child(L"toolbar").child(L"icons");
 		ISkinObj *pSkin = SApplication::getSingleton().CreateSkinByName(xmlIconSkin.attribute(L"class_name").as_string(SSkinImgList::GetClassName()));
 		if(pSkin)
 		{
 			pSkin->InitFromXml(&xmlIconSkin);
-			SSkinPoolMgr::getSingleton().GetUserSkinPool()->AddSkin(pSkin);
+			m_skinPool->AddSkin(pSkin);
 			pSkin->Release();
 		}
 		SXmlNode xmlWidget = xmlNode.child(L"controls").first_child();
@@ -64,6 +67,9 @@ public:
 			}
 			xmlWidget = xmlWidget.next_sibling();
 		}
+	}
+	~CWidgetTBAdapter(){
+		SUiDef::getSingleton().PopSkinPool(m_skinPool);
 	}
 protected:
 	virtual int WINAPI getCount()
@@ -99,6 +105,7 @@ private:
 
 class CSkinTBAdapter : public SAdapterBase
 {
+	SAutoRefPtr<SSkinPool> m_skinPool;
 public:
 	struct IconInfo{
 		int iIcon;
@@ -112,14 +119,19 @@ public:
 		virtual void OnInertSkin(IconInfo * info) = 0;
 	};
 public:
+	~CSkinTBAdapter(){
+		SUiDef::getSingleton().PopSkinPool(m_skinPool);
+	}
 	CSkinTBAdapter(SXmlNode xmlNode, IListener * pListener):m_pListener(pListener)
 	{
+		m_skinPool.Attach(new SSkinPool());
+		SUiDef::getSingleton().PushSkinPool(m_skinPool);
 		SXmlNode xmlIconSkin = xmlNode.child(L"toolbar").child(L"icons");
 		ISkinObj *pSkin = SApplication::getSingleton().CreateSkinByName(xmlIconSkin.attribute(L"class_name").as_string(SSkinImgList::GetClassName()));
 		if(pSkin)
 		{
 			pSkin->InitFromXml(&xmlIconSkin);
-			SSkinPoolMgr::getSingleton().GetUserSkinPool()->AddSkin(pSkin);
+			m_skinPool->AddSkin(pSkin);
 			pSkin->Release();
 		}
 		SXmlNode xmlSkin = xmlNode.child(L"skins").first_child();

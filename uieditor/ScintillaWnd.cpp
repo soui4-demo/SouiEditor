@@ -477,7 +477,8 @@ void CScintillaWnd::ShowAutoComplete(char ch)
 {
 	if (SendEditor(SCI_AUTOCACTIVE, 0, 0) != 0)
 		return;
-	m_pListener->onScintillaAutoComplete(this,ch);
+	if(m_pListener)
+		m_pListener->onScintillaAutoComplete(this,ch);
 }
 
 LRESULT CScintillaWnd::OnNotify(int idCtrl, LPNMHDR pnmh)

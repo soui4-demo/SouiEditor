@@ -56,7 +56,7 @@ namespace SOUI
      *
      * Describe  调整窗口大小
      */
-	STDMETHOD_(BOOL, OnRealWndPosition)(THIS_ IWindow * pRealWnd, RECT rcWnd) OVERRIDE;
+	STDMETHOD_(BOOL, OnRealWndPosition)(THIS_ IWindow * pRealWnd, const RECT *rcWnd) OVERRIDE;
 
     };
 

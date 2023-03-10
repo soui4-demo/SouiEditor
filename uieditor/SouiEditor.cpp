@@ -11,6 +11,7 @@
 #include <helper/SAppDir.h>
 #include "Global.h"
 #include "../ExtendCtrls/SCtrlsRegister.h"
+#pragma comment(lib, "shlwapi.lib")
 
 //定义唯一的一个R,UIRES对象,ROBJ_IN_CPP是resource.h中定义的宏。
 #define INIT_R_DATA

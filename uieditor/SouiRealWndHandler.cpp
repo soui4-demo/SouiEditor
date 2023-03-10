@@ -16,10 +16,10 @@ namespace SOUI
 	HWND CSouiRealWndHandler::OnRealWndCreate(IWindow *pRealWnd1)
 	{
 		SRealWnd *pRealWnd = sobj_cast<SRealWnd>(pRealWnd1);
-		if (pRealWnd->GetRealWndParam().m_strClassName == _T("scintilla"))
+		if (pRealWnd->GetRealClassName()->CompareNoCase(_T("scintilla"))==0)
 		{
 			CScintillaWnd *pWnd = new CScintillaWnd;
-			BOOL bOK = pWnd->Create(pRealWnd->GetRealWndParam().m_strWindowName, WS_CHILD, CRect(), pRealWnd->GetContainer()->GetHostHwnd(), pRealWnd->GetID(), SApplication::getSingleton().GetModule());
+			BOOL bOK = pWnd->Create(pRealWnd->GetRealWindowName()->c_str(), WS_CHILD, CRect(), pRealWnd->GetContainer()->GetHostHwnd(), pRealWnd->GetID(), SApplication::getSingleton().GetModule());
 			if (!bOK)
 			{
 				SASSERT(FALSE);
@@ -29,7 +29,7 @@ namespace SOUI
 			pRealWnd->SetUserData((ULONG_PTR)pWnd);
 			return pWnd->m_hWnd;
 		}
-		else if (pRealWnd->GetRealWndParam().m_strClassName == _T("designer_wnd"))
+		else if (pRealWnd->GetRealClassName()->CompareNoCase(_T("designer_wnd"))==0)
 		{
 			CDesignWnd *pWnd = new CDesignWnd;
 			HWND hWnd = pWnd->CreateEx(pRealWnd->GetContainer()->GetHostHwnd(),WS_CHILD|WS_CLIPCHILDREN,0,0,0,0,0);
@@ -39,7 +39,8 @@ namespace SOUI
 				delete pWnd;
 				return 0;
 			}
-			pWnd->InitFromXml(&pRealWnd->GetRealWndParam().m_xmlParams.root().child(L"params"));
+			SXmlNode param(pRealWnd->GetRealParam());
+			pWnd->InitFromXml(&param.child(L"params"));
 			pRealWnd->SetUserData((ULONG_PTR)pWnd);
 			return hWnd;
 		}else
@@ -51,7 +52,7 @@ namespace SOUI
 	void CSouiRealWndHandler::OnRealWndDestroy(IWindow *pRealWnd1)
 	{
 		SRealWnd *pRealWnd = sobj_cast<SRealWnd>(pRealWnd1);
-		if (pRealWnd->GetRealWndParam().m_strClassName == _T("scintilla"))
+		if (pRealWnd->GetRealClassName()->CompareNoCase(_T("scintilla"))==0)
 		{
 			CScintillaWnd *pWnd = (CScintillaWnd *)pRealWnd->GetUserData();
 			if (pWnd)
@@ -74,7 +75,7 @@ namespace SOUI
 		return FALSE;
 	}
 
-	BOOL CSouiRealWndHandler::OnRealWndPosition(THIS_ IWindow * pRealWnd, RECT rcWnd)
+	BOOL CSouiRealWndHandler::OnRealWndPosition(THIS_ IWindow * pRealWnd, const RECT *rcWnd)
 	{
 		return FALSE;
 	}

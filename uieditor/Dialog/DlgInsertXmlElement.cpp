@@ -197,7 +197,7 @@ namespace SOUI{
 				lf = fontDlg.m_lf;
 				FontInfo fi;
 				fi.strFaceName = lf.lfFaceName;
-				fi.style.attr.cSize = abs(lf.lfHeight);
+				fi.style.attr.nSize = abs(lf.lfHeight);
 				fi.style.attr.byWeight = lf.lfWeight/4;
 				fi.style.attr.byCharset = lf.lfCharSet;
 				fi.style.attr.fItalic = lf.lfItalic;
