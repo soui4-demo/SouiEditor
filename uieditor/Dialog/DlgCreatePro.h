@@ -21,7 +21,6 @@ namespace SOUI
 {
 	class SDlgCreatePro: public SHostDialog
 	{
-		DEF_SOBJECT(SHostDialog,L"dlgcreatepro")
 	public:
 		SDlgCreatePro(LPCTSTR pszXmlName):SHostDialog(pszXmlName)
 		{

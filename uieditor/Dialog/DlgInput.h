@@ -7,7 +7,6 @@ namespace SOUI
 {
 	class SDlgInput: public SHostDialog
 	{
-		DEF_SOBJECT(SHostDialog,L"dlginput")
 	public:
 		SDlgInput();
 

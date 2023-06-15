@@ -9,7 +9,6 @@ namespace SOUI
 {
 	class SDlgAbout: public SHostDialog
 	{
-		DEF_SOBJECT(SHostDialog,L"dlgabout")
 	public:
 		SDlgAbout();
 

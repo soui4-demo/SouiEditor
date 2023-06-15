@@ -9,7 +9,6 @@ namespace SOUI
 {
 	class SDlgNewLayout: public SHostDialog
 	{
-		DEF_SOBJECT(SHostDialog, L"dlgnewlayout")
 	public:
 		SDlgNewLayout(LPCTSTR pszXmlName, SStringT strProPath);
 
