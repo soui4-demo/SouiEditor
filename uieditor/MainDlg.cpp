@@ -57,7 +57,7 @@ BOOL CMainDlg::OnInitDialog(HWND hWnd, LPARAM lParam)
 	//======================================================================
 	m_pXmlEdtior = new CXmlEditor(this);
 	m_pXmlEdtior->Init(GetRoot(),this);
-	SStringT strCfgDir = g_CurDir + "Config";
+	SStringT strCfgDir = g_CurDir + _T("Config");
 	SApplication::getSingleton().SetFilePrefix(strCfgDir);
 	g_SysDataMgr.LoadSysData(strCfgDir);
 
@@ -411,7 +411,7 @@ void CMainDlg::OnBtnNewLayout()
 	SDlgNewLayout DlgNewDialog(_T("layout:UIDESIGNER_XML_NEW_LAYOUT"), m_strProPath);
 	if (IDOK == DlgNewDialog.DoModal(m_hWnd))
 	{
-		CopyFile(CSysDataMgr::getSingleton().GetConfigDir() + ("\\LayoutTmpl\\Dialog.xml"), DlgNewDialog.m_strPath, FALSE);
+		CopyFile(CSysDataMgr::getSingleton().GetConfigDir() + _T("\\LayoutTmpl\\Dialog.xml"), DlgNewDialog.m_strPath, FALSE);
 		NewLayout(DlgNewDialog.m_strName, DlgNewDialog.m_strPath);
 
 		SStringT *strShortPath = new SStringT(DlgNewDialog.m_strPath.Mid(m_strProPath.GetLength() + 1));
