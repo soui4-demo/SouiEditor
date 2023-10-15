@@ -3,9 +3,7 @@
 ######################################################################
 TEMPLATE = lib
 TARGET = ExtendCtrls
-CONFIG(x64){
-TARGET = $$TARGET"64"
-}
+
 
 CONFIG += staticlib
 

@@ -3,9 +3,7 @@
 ######################################################################
 TEMPLATE = app
 TARGET = uiPreview
-CONFIG(x64){
-TARGET = $$TARGET"64"
-}
+
 
 include($$(SOUI4PATH)/demo_com.pri)
 
