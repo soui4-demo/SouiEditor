@@ -43,11 +43,7 @@ void CXmlEditor::StartPreviewProcess()
 {
 	SAppDir appdir(NULL);
 	SStringT binDir = appdir.AppDir();
-#ifdef _DEBUG
-	SStringT strPreviewExePath = binDir + _T("\\uiviewerd.exe");
-#else
 	SStringT strPreviewExePath = binDir + _T("\\uiviewer.exe");
-#endif
 
 	TCHAR buffer[32] = { 0 };
 	SStringT strCommandLine = strPreviewExePath + _T(" ");

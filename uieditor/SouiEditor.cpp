@@ -26,12 +26,7 @@
 	#define RES_TYPE 1  //从PE资源中加载UI资源
 #endif
 
-#ifdef _DEBUG
-#define SYS_NAMED_RESOURCE _T("soui-sys-resourced.dll")
-#else
 #define SYS_NAMED_RESOURCE _T("soui-sys-resource.dll")
-#endif
-	
 
 SStringT g_CurDir;
 void RegisterExtendControl(SApplication *theApp);
