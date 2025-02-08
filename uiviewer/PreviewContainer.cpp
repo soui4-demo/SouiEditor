@@ -35,7 +35,7 @@ int CPreviewContainer::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	SetScrollMax(KCanvas_Size, KCanvas_Size);
 
-	m_previewHost.CreateNative(NULL,WS_CHILD|WS_VISIBLE|WS_CLIPCHILDREN,0,0,0,0,0,m_hWnd,0,NULL);
+	m_previewHost.CreateEx(m_hWnd,WS_CHILD|WS_VISIBLE|WS_CLIPCHILDREN,0,0,0,0,0,NULL);
 	CRect rcPreview = m_previewHost.GetWindowRect();
 
 	CRect rcHost;
