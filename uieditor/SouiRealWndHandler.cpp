@@ -64,12 +64,6 @@ namespace SOUI
 	}
 
 	//不处理，返回FALSE
-	BOOL CSouiRealWndHandler::OnRealWndSize(IWindow *pRealWnd)
-	{
-		return FALSE;
-	}
-
-	//不处理，返回FALSE
 	BOOL CSouiRealWndHandler::OnRealWndInit(IWindow *pRealWnd)
 	{
 		return FALSE;

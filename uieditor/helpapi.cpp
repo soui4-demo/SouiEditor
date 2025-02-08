@@ -18,22 +18,16 @@ bool FileIsExist(const SStringT &filepath)
 
 SStringT GetFileExtname(const SStringT& filepath)
 {
-	wchar_t wcDirPath[MAX_PATH] = { 0 };
-	wchar_t* wcExtension = PathFindExtensionW(filepath);
-	SStringT strRet = L"";
-	if (wcExtension)
-		strRet = wcExtension;
-	return strRet;
+	TCHAR szExt[50] = { 0 };
+	_tsplitpath(filepath, NULL, NULL, NULL, szExt);
+	return szExt;
 }
 
 SStringT GetFilename(const SStringT& filepath)
 {
-	wchar_t wcDirPath[MAX_PATH] = { 0 };
-	wchar_t* wcExtension = PathFindFileNameW(filepath);
-	SStringT strRet = L"";
-	if (wcExtension)
-		strRet = wcExtension;
-	return strRet;
+	TCHAR szName[MAX_PATH] = { 0 };
+	_tsplitpath(filepath, NULL, NULL, szName, NULL);
+	return szName;
 }
 
 //自定义排序函数  

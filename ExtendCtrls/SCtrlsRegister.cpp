@@ -7,8 +7,7 @@
 #include "SFreeMoveWindow.h"
 #include "SVscrollbar.h"
 #include "SSkinNewScrollBar.h"
-#include "gif/SSkinGif.h"
-#include "gif/SSkinAPNG.h"
+#include "gif/SSkinAni.h"
 #include "gif/SGifPlayer.h"
 #include "SScrollText.h"
 #include "ExtendSkins.h"
@@ -49,8 +48,7 @@ void SCtrlsRegister::RegisterCtrls(SApplication *theApp)
 	theApp->RegisterSkinClass<SColorMask>();
 	theApp->RegisterSkinClass<SSkinVScrollbar>();
 	theApp->RegisterSkinClass<SSkinNewScrollbar>();
-	theApp->RegisterSkinClass<SSkinGif>();
-	theApp->RegisterSkinClass<SSkinAPNG>();
+	theApp->RegisterSkinClass<SSkinAni>();
 }
 
 

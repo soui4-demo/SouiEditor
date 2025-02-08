@@ -9,9 +9,11 @@
 #include "SImgCanvas.h"
 #include "CmdLine.h"
 #include <helper/SAppDir.h>
+#include <interface/SMessageBox-i.h>
 #include "Global.h"
 #include "../ExtendCtrls/SCtrlsRegister.h"
 #pragma comment(lib, "shlwapi.lib")
+
 
 //定义唯一的一个R,UIRES对象,ROBJ_IN_CPP是resource.h中定义的宏。
 #define INIT_R_DATA
@@ -115,13 +117,7 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
         theApp->AddResProvider(pResProvider);
 
 		//读取自定义消息框布局
-		int ret = 0;
-		SXmlDoc xmlDoc;
-		if (!theApp->LoadXmlDocment(xmlDoc, _T("LAYOUT:xml_messagebox")) || !SetMsgTemplate(xmlDoc.root().child(L"SOUI")))
-			ret = -1;
-		if (ret == -1)
-			SMessageBox(NULL, _T("【消息框皮肤】读取失败"), _T("提示"), 0);
-
+        theApp->SetMessageBoxTemplateResId(_T("LAYOUT:xml_messagebox"));
 		//设置真窗口处理接口
 		CSouiRealWndHandler * pRealWndHandler = new CSouiRealWndHandler();
 		theApp->SetRealWndHandler(pRealWndHandler);

@@ -6,6 +6,7 @@
 #include "SysdataMgr.h"
 #include <helper/SAppDir.h>
 #include <control/SRealWnd.h>
+#include <shlwapi.h>
 
 //编辑界面时XML窗口只显示选择控件的XML文本
 //#define  ONLYSHOWSELXML
