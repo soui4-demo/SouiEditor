@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include "DesignWnd.h"
-#include <shlwapi.h>
+#include <shellapi.h>
 #pragma comment(lib,"Msimg32.lib")
 
 //////////////////////////////////////////////////////////////////////////

@@ -1,9 +1,7 @@
 ﻿#pragma once
-#include "core/shostwnd.h"
-#include "core/smsgloop.h"
+
 #include "core/SHostDialog.h"
 #include "control/SRichEdit.h"
-//#include "SImageEx.h"
 
 namespace SOUI
 {
@@ -46,7 +44,7 @@ namespace SOUI
 			//EVENT_ID_COMMAND(IDOK,OnOK)
 			//EVENT_ID_COMMAND(IDCANCEL,OnCancel)
 			EVENT_ID_HANDLER(R.id.new_layout_resname, EventRENotify::EventID, OnResNameInputNotify)
-		EVENT_MAP_END()
+		EVENT_MAP_END2(SHostDialog)
 
 		BEGIN_MSG_MAP_EX(SResMgrDlg)
 			MSG_WM_INITDIALOG(OnInitDialog)

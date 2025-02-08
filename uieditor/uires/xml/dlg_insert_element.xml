@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SOUI name="insert_element" title="" bigIcon="ICON_LOGO:48" smallIcon="ICON_LOGO:32" width="800" height="600" margin="5,5,5,5" resizable="1">
+<SOUI name="insert_element" title="" bigIcon="ICON_LOGO:48"  wndType="appMain" smallIcon="ICON_LOGO:32" width="800" height="600" margin="5,5,5,5" resizable="1">
   <root colorBkgnd="@color/bkBlack1" margin="1" colorBorder="#6f1111" layout="vbox">
     <caption size="-2,40" colorBkgnd="#FFFFFF20">
       <icon name="" src="ICON_LOGO:32" pos="8,|0" offset="0,-0.5" />
@@ -26,7 +26,7 @@
           <text size="-2,0" weight="1" name="txt_prop_desc" multiLines="1" valign="top"/>
         </window>
       </pane>
-      <pane priority="0" idealSize="100" colorBkgnd="#ffffff">
+      <pane priority="0" idealSize="100" colorBkgnd="#ffffff" layout="vbox">
         <realwnd size="-2,-2" name="xml_editor" wndclass="scintilla" wndname="scintilla" />
       </pane>
     </splitcol>

@@ -13,11 +13,12 @@
 
 #include <commdlg.h>
 #include <shlobj.h>
+#include <atl.mini/SComCli.h>
 
 #if (_WIN32_WINNT >= 0x0600) && !defined(_WIN32_WCE)
 #include <shobjidl.h>
 #endif // (_WIN32_WINNT >= 0x0600) && !defined(_WIN32_WCE)
-#include <core\SNativeWnd.h>
+#include <core/SNativeWnd.h>
 
 #ifndef _Post_writable_byte_size_
 #define _Post_writable_byte_size_(x)
@@ -360,15 +361,15 @@ public: \
 
 			//ModuleHelper::AddCreateWndData(&m_thunk.cd, (ATL::CDialogImplBase*)this);
 			SOUI::SNativeWndHelper::getSingletonPtr()->LockSharePtr(this);
-			m_pThunk = (tagThunk*)HeapAlloc(SNativeWndHelper::getSingletonPtr()->GetHeap(), HEAP_ZERO_MEMORY, sizeof(tagThunk));
+			m_pThunk = (tagThunk*)HeapAlloc(SNativeWndHelper::instance()->GetHeap(), HEAP_ZERO_MEMORY, sizeof(tagThunk));
 			BOOL bRet;
 			if (m_bOpenFileDialog)
 				bRet = ::GetOpenFileName(&m_ofn);
 			else
 				bRet = ::GetSaveFileName(&m_ofn);
-			SNativeWndHelper::getSingletonPtr()->UnlockSharePtr();
+			SNativeWndHelper::instance()->UnlockSharePtr();
 			m_hWnd = NULL;
-			HeapFree(SNativeWndHelper::getSingletonPtr()->GetHeap(), 0, m_pThunk);
+			HeapFree(SNativeWndHelper::instance()->GetHeap(), 0, m_pThunk);
 			return bRet ? IDOK : IDCANCEL;
 		}
 		// Attributes
@@ -630,7 +631,7 @@ public: \
 			{
 				// On NT platforms, GetOpenFileNameA thunks to GetOpenFileNameW and there 
 				// is absolutely nothing we can do except to start off with a large buffer.
-				ATLVERIFY(ResizeFilenameBuffer(_WTL_FIXED_OFN_BUFFER_LENGTH));
+				ResizeFilenameBuffer(_WTL_FIXED_OFN_BUFFER_LENGTH);
 			}
 #endif
 		}
@@ -1777,9 +1778,9 @@ public: \
 		{			
 			CRect rc;
 			::GetClientRect(m_hWnd, &rc);
-			HFONT hFont = CreateFont(-12, 0, 0, 0, 0, 0, 0, 0, GB2312_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"宋体");
+			HFONT hFont = CreateFont(-12, 0, 0, 0, 0, 0, 0, 0, GB2312_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, _T("宋体"));
 			m_pSCheckBtn=new CWindowImpl(this);
-			HWND hWnd = m_pSCheckBtn->Create(L"BUTTON", L"包括子目录", WS_CHILD | BS_CHECKBOX, 20, rc.bottom - 50, 100, 30, m_hWnd,NULL,SApplication::getSingleton().GetModule());
+			HWND hWnd = m_pSCheckBtn->Create(_T("BUTTON"), _T("包括子目录"), WS_CHILD | BS_CHECKBOX, 20, rc.bottom - 50, 100, 30, m_hWnd,NULL,SApplication::getSingleton().GetModule());
 			m_pSCheckBtn->SendMessage(WM_SETFONT, (WPARAM)hFont, 0);
 			m_pSCheckBtn->SendMessage(BM_SETCHECK,m_bIncludeChildDir?BST_CHECKED: BST_UNCHECKED, 0);			
 			m_pSCheckBtn->ShowWindow(TRUE);
@@ -1798,7 +1799,7 @@ public: \
 		{
 			if (uMsg != WM_INITDIALOG)
 				return 0;
-			CCommonDialogImplBase* pT = (CCommonDialogImplBase*)SNativeWndHelper::getSingletonPtr()->GetSharePtr();
+			CCommonDialogImplBase* pT = (CCommonDialogImplBase*)SNativeWndHelper::instance()->GetSharePtr();
 			ATLASSERT(pT != NULL);
 			ATLASSERT(pT->m_hWnd == NULL);
 			ATLASSERT(::IsWindow(hWnd));
@@ -1888,9 +1889,9 @@ public: \
 
 
 			//ModuleHelper::AddCreateWndData(&m_thunk.cd, (CCommonDialogImplBase*)this);
-			SNativeWndHelper::getSingletonPtr()->LockSharePtr(this);
+			SNativeWndHelper::instance()->LockSharePtr(this);
 			BOOL bRet = ::ChooseFont(&m_cf);
-			SNativeWndHelper::getSingletonPtr()->UnlockSharePtr();
+			SNativeWndHelper::instance()->UnlockSharePtr();
 			m_hWnd = NULL;
 
 			if (bRet)   // copy logical font from user's initialization buffer (if needed)
@@ -2226,7 +2227,7 @@ public: \
 
 			if (uMsg == WM_INITDIALOG)
 			{
-				pT = (CCommonDialogImplBase*)SNativeWndHelper::getSingletonPtr()->GetSharePtr();
+				pT = (CCommonDialogImplBase*)SNativeWndHelper::instance()->GetSharePtr();
 				lpCC->lCustData = (LPARAM)pT;
 				ATLASSERT(pT != NULL);
 				ATLASSERT(pT->m_hWnd == NULL);

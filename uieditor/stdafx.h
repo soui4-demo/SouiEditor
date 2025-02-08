@@ -7,18 +7,18 @@
 
 #define  _CRT_SECURE_NO_WARNINGS
 #define	 DLL_SOUI
-#include <winsock2.h>
+//#include <winsock2.h>
 
 #include <souistd.h>
 #include <core/SHostDialog.h>
 #include <control/SMessageBox.h>
-#include <control/souictrls.h>
-#include <res.mgr/sobjdefattr.h>
+#include <control/SouiCtrls.h>
+#include <res.mgr/SObjDefAttr.h>
 #include <com-cfg.h>
 #include <SouiFactory.h>
 #include "resource.h"
 #include "FileHelper.h"
-#include "res\resource.h"
+#include "res/resource.h"
 #include <helper/SAdapterBase.h>
 
 using namespace SOUI;

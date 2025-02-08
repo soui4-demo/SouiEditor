@@ -29,7 +29,7 @@ namespace SOUI{
 			EVENT_HANDLER(EventPropGridItemButtonClick::EventID,OnPropItemButtonClick)
 			EVENT_HANDLER(EventPropGridItemInplaceInit::EventID,OnPropItemInplaceInit)
 			EVENT_HANDLER(EventToolBarCmd::EventID,OnPropToolbarCmd)
-		EVENT_MAP_END()
+		EVENT_MAP_END2(SHostDialog)
 
 		BOOL OnInitDialog(HWND wndFocus, LPARAM lInitParam);
 		void OnTimer(UINT_PTR id);

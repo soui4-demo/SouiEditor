@@ -61,9 +61,9 @@ public:
 
 	SStringA GetColorAutos(SStringT prev);
 
-	SStringT GetSkinXmlName() const;
+	BOOL IsSkinXml(const SStringT & strPath) const;
 
-	void GetSubNodes(pugi::xml_node & parentNode, SStringT parentNodeName);
+	void GetSubNodes(pugi::xml_node & parentNode, SStringW parentNodeName);
 
 	static SStringT RemoveResTypename(const SStringT & resname);
 

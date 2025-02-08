@@ -2,7 +2,7 @@
 
 <root>
   <toolbar>
-    <icons class_name="imglist" name="widget_icons" src="file:img\ctrl_icons.png" states="32"/>
+    <icons class_name="imglist" name="widget_icons" src="file:img/ctrl_icons.png" states="32"/>
   </toolbar>
   <controls>
     <!-- pos和size都不是必须的，设计器根据鼠标按下的位置设置pos -->
@@ -41,27 +41,8 @@
     <base visible="0">
       <groups>
         <propgroup title="属性:SObject"  description="属性" expanded="false">
-          <proptext title="皮肤名(name)" name="name" value="" description="控件名称"/>
-          <proptext title="ID" name="id" value="" description="控件ID"/>
-          <propoption title="水平对齐" name="align" value="" options="left|center|right" description="水平对齐方式"/>
-          <propoption title="垂直对齐" name="valign" value="" options="top|middle|bottom" description="垂直对齐方式"/>
-          <propcolor title="背景色" name="colorBkgnd" value="" description="背景颜色，不指定skin时有效"/>
-          <propcolor title="边框颜色" name="colorBorder" value="" description="边框颜色，需要和margin一起使用"/>
-          <proptext title="文本字体" name="font" value="" extendType="font" description="文本字体"/>
-          <proptext title="Hover字体" name="fontHover" value="" extendType="font" description="Hover状态文本字体"/>
-          <proptext title="Push字体" name="fontPush" value="" extendType="font" description="Push状态文本字体"/>
-          <proptext title="Disable字体" name="fontDisable" value="" extendType="font" description="Disable状态文本字体"/>
-          <proptext title="文本颜色" name="colorText" value="" description="文本颜色"/>
-          <proptext title="Hover颜色" name="colorTextHover" value="" description="Hover状态文本颜色"/>
-          <proptext title="Push颜色" name="colorTextPush" value="" description="Push状态文本颜色"/>
-          <proptext title="Disable颜色" name="colorTextDisable" value="" description="Disable状态文本颜色"/>
-          <proprect title="边框大小" name="margin" childrenTitles="左|上|右|下"  description="框架大小，和colorBorder或者ncSkin配合使用"/>
-          <proprect title="内边距" name="padding" childrenTitles="左|上|右|下"  description="控件内边距，和inset属性相同"/>
-          <propoption title="消息穿透" name="msgTransparent" value="" options="是:1|否:0" description="鼠标消息穿透，为TRUE是，控件不拦截鼠标消息"/>
-          <propoption title="省略号显示文本" name ="dotted" options="是:1|否:0" description="是否支持省略号显示文本" />
-          <proptext title="透明度" name ="alpha" description="数值在0-255之间"/>
-          <propoption title="跟踪鼠标" name ="trackMouseEvent" options="是:1|否:0" description="窗口不在最顶层时可以收到mouseHover,mouseLeave消息" />
-          <propoption title="背景融合" name ="blendBackground" options="是:1|否:0" description="渲染窗口内容和背景混合标志，默认为TRUE，为FALSE代表窗口不需要和背景做融合，如视频显示窗口" />
+          <proptext title="name" name="name" value="" description="Object Name"/>
+          <proptext title="ID" name="id" value="" description="Object ID"/>
         </propgroup>
       </groups>
     </base>
@@ -112,6 +93,27 @@
       <window/>
       <groups>
         <propgroup title="属性:SWindow"  description="属性">
+          <proptext title="text" name="text" value="" description="text value"/>
+          <propoption title="水平对齐" name="align" value="" options="left|center|right" description="水平对齐方式"/>
+          <propoption title="垂直对齐" name="valign" value="" options="top|middle|bottom" description="垂直对齐方式"/>
+          <propcolor title="背景色" name="colorBkgnd" value="" description="背景颜色，不指定skin时有效"/>
+          <propcolor title="边框颜色" name="colorBorder" value="" description="边框颜色，需要和margin一起使用"/>
+          <proptext title="文本字体" name="font" value="" extendType="font" description="文本字体"/>
+          <proptext title="Hover字体" name="fontHover" value="" extendType="font" description="Hover状态文本字体"/>
+          <proptext title="Push字体" name="fontPush" value="" extendType="font" description="Push状态文本字体"/>
+          <proptext title="Disable字体" name="fontDisable" value="" extendType="font" description="Disable状态文本字体"/>
+          <propcolor title="文本颜色" name="colorText" value="" description="文本颜色"/>
+          <propcolor title="Hover颜色" name="colorTextHover" value="" description="Hover状态文本颜色"/>
+          <propcolor title="Push颜色" name="colorTextPush" value="" description="Push状态文本颜色"/>
+          <propcolor title="Disable颜色" name="colorTextDisable" value="" description="Disable状态文本颜色"/>
+          <proprect title="边框大小" name="margin" childrenTitles="左|上|右|下"  description="框架大小，和colorBorder或者ncSkin配合使用"/>
+          <proprect title="内边距" name="padding" childrenTitles="左|上|右|下"  description="控件内边距，和inset属性相同"/>
+          <propoption title="消息穿透" name="msgTransparent" value="" options="是:1|否:0" description="鼠标消息穿透，为TRUE是，控件不拦截鼠标消息"/>
+          <propoption title="省略号显示文本" name ="dotted" options="是:1|否:0" description="是否支持省略号显示文本" />
+          <proptext title="透明度" name ="alpha" description="数值在0-255之间"/>
+          <propoption title="跟踪鼠标" name ="trackMouseEvent" options="是:1|否:0" description="窗口不在最顶层时可以收到mouseHover,mouseLeave消息" />
+          <propoption title="背景融合" name ="blendBackground" options="是:1|否:0" description="渲染窗口内容和背景混合标志，默认为TRUE，为FALSE代表窗口不需要和背景做融合，如视频显示窗口" />
+
           <propoption title="皮肤" name="skin"  dropDown="false" extendType="skin"/>
           <propoption title="边框皮肤" name ="ncskin"  dropDown="false" extendType="skin"/>
           <propoption title="样式" name ="class"  dropDown="false" extendType="class"/>
@@ -144,7 +146,7 @@
     </window>
 
     <text icon="21" parent="window">
-      <text pos="0,0">文本</text>
+      <text text="text"/>
       <groups>
         <propgroup name="属性:text">
           <proptext name ="interHeight" description="行间距"/>
@@ -170,7 +172,6 @@
 
           <proptext name="sbFadeFrames" description="滚动条动画帧数"/>
           <proptext name="sbTrumbTrackMinAlpha" description="滚动条滑块最小alpha值"/>
-          <!--propoption name="sbFadeInterpolator" options="左:left|上:top|中:center|右:right|下:bottom" description="滚动条动画插值类型"/-->
         </propgroup>
       </groups>
     </div>

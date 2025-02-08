@@ -29,18 +29,18 @@ bool CSysDataMgr::LoadSysData(LPCTSTR cfgDir)
 
 SStringA CSysDataMgr::GetCtrlAutos()
 {
-	SStringT strAuto;
+	SStringW strAuto;
 	pugi::xml_node xmlCtrl = getCtrlDefNode().child(L"controls").first_child();
 	while(xmlCtrl)
 	{
 		strAuto += xmlCtrl.name();
-		strAuto += _T(' ');
+		strAuto += L' ';
 		xmlCtrl = xmlCtrl.next_sibling();
 	}
 	return S_CW2A(strAuto, CP_UTF8);
 }
 
-SStringA CSysDataMgr::GetCtrlAttrAutos(SStringT ctrlname)
+SStringA CSysDataMgr::GetCtrlAttrAutos(SStringW ctrlname)
 {
 	std::set<SStringW> attrs;
 	_GetCtrlAttrs(ctrlname,attrs);
@@ -57,7 +57,7 @@ SStringA CSysDataMgr::GetCtrlAttrAutos(SStringT ctrlname)
 
 void CSysDataMgr::InitCtrlDef()
 {
-	pugi::xml_parse_result result = m_xmlCtrlDef.load_file(m_strConfigDir + L"\\ctrl.xml");
+	pugi::xml_parse_result result = m_xmlCtrlDef.load_file(m_strConfigDir + _T("/Ctrl.xml"));
 }
 
 pugi::xml_node CSysDataMgr::getCtrlDefNode()
@@ -67,7 +67,7 @@ pugi::xml_node CSysDataMgr::getCtrlDefNode()
 
 void CSysDataMgr::InitSkinProp()
 {
-	m_xmlSkinProp.load_file(m_strConfigDir + L"\\skin.xml");
+	m_xmlSkinProp.load_file(m_strConfigDir + _T("/Skin.xml"));
 }
 
 pugi::xml_node CSysDataMgr::getSkinDefNode()

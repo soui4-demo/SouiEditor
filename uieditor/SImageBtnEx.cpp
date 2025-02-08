@@ -3,7 +3,7 @@
 
 void SOUI::SImageBtnEx::OnPaint( IRenderTarget *pRT )
 {
-	__super::OnPaint(pRT);
+	__baseCls::OnPaint(pRT);
 	SPainter painter;
 
 	BeforePaint(pRT, painter);

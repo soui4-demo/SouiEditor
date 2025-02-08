@@ -1,4 +1,4 @@
-﻿#include "StdAfx.h"
+﻿#include "stdafx.h"
 #include "SouiRealWndHandler.h"
 #include "ScintillaWnd.h"
 #include "DesignWnd.h"
@@ -40,7 +40,8 @@ namespace SOUI
 				return 0;
 			}
 			SXmlNode param(pRealWnd->GetRealParam());
-			pWnd->InitFromXml(&param.child(L"params"));
+			SXmlNode xmlParam = param.child(L"params");
+			pWnd->InitFromXml(&xmlParam);
 			pRealWnd->SetUserData((ULONG_PTR)pWnd);
 			return hWnd;
 		}else
@@ -61,12 +62,6 @@ namespace SOUI
 				delete pWnd;
 			}
 		}
-	}
-
-	//不处理，返回FALSE
-	BOOL CSouiRealWndHandler::OnRealWndSize(IWindow *pRealWnd)
-	{
-		return FALSE;
 	}
 
 	//不处理，返回FALSE

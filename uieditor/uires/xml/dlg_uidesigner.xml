@@ -19,7 +19,7 @@
         </template>
       </listview>
       <listview size="-2,50" name="lv_tb_widget" display="0" vertical="0" visible="0">
-        <template skin="skin_toolbar_state" layout="hbox" itemWidth="110" gravity="center" clipClient="1" interval="5">
+        <template skin="skin_app_button" layout="hbox" itemWidth="110" gravity="center" clipClient="1" interval="5">
           <window size="0,0" visible="0" weight="1"/>
           <img name="item_icon" skin="widget_icons"/>
           <text name="item_text"/>

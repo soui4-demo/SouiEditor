@@ -3,7 +3,7 @@
 /////////////////////////////////////////////////////////////////////////////
 #pragma once
 
-#include <core/Swnd.h>
+#include <core/SWnd.h>
 #include <control/SCmnCtrl.h>
 #include "Dialog/DlgCreatePro.h"
 #include "XmlEditor.h"
@@ -54,12 +54,12 @@ public:
 			{
 				IconInfo info;
 				info.iIcon = xmlWidget.attribute(L"icon").as_int(0);
-				info.strElement = xmlWidget.name();
+				info.strElement = S_CW2T(xmlWidget.name());
 				if(xmlWidget.attribute(L"text"))
-					info.strTxt=xmlWidget.attribute(L"text").as_string();
+					info.strTxt=S_CW2T(xmlWidget.attribute(L"text").as_string());
 				else
-					info.strTxt = xmlWidget.name();
-				info.strTip = xmlWidget.attribute(L"tip").as_string();
+					info.strTxt = S_CW2T(xmlWidget.name());
+				info.strTip = S_CW2T(xmlWidget.attribute(L"tip").as_string());
 				SStringW strContent;
 				xmlWidget.child(xmlWidget.name()).ToString(&strContent); 
 				info.strContent = S_CW2A(strContent,CP_UTF8);
@@ -141,12 +141,12 @@ public:
 			{
 				IconInfo info;
 				info.iIcon = xmlSkin.attribute(L"icon").as_int(0);
-				info.strElement = xmlSkin.name();
+				info.strElement = S_CW2T(xmlSkin.name());
 				if(xmlSkin.attribute(L"text"))
-					info.strTxt=xmlSkin.attribute(L"text").as_string();
+					info.strTxt=S_CW2T(xmlSkin.attribute(L"text").as_string());
 				else
-					info.strTxt = xmlSkin.name();
-				info.strTip = xmlSkin.attribute(L"tip").as_string();
+					info.strTxt = S_CW2T(xmlSkin.name());
+				info.strTip = S_CW2T(xmlSkin.attribute(L"tip").as_string());
 				m_arrIcons.Add(info);
 			}
 			xmlSkin = xmlSkin.next_sibling();
@@ -256,7 +256,7 @@ protected:
 		EVENT_ID_HANDLER(R.id.workspace_tree,EVT_TC_DBCLICK,OnTreeItemDbClick)
 		EVENT_ID_HANDLER(R.id.workspace_xmlfile_lb,EVT_LB_DBCLICK,OnWorkspaceXMLDbClick)
 		EVENT_ID_HANDLER(R.id.chk_autosave,EventSwndStateChanged::EventID,OnAutoCheck)
-	EVENT_MAP_END()
+	EVENT_MAP_END2(SHostWnd)
 
 protected:
 	//HostWnd真实窗口消息处理

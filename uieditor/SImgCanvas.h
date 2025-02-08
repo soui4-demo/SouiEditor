@@ -9,7 +9,7 @@ namespace SOUI
         SImgCanvas(void);
         ~SImgCanvas(void);
         
-        BOOL AddFile(LPCWSTR pszFileName);
+        BOOL AddFile(LPCTSTR pszFileName);
         void Clear();
        
 		// 获取当前显示图像的长和宽

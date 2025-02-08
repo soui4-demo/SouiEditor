@@ -36,8 +36,8 @@ namespace SOUI
 					continue;
 				}
 				ResInfo info;
-				info.strName = xmlNode.attribute(L"name").as_string();
-				info.strPath = xmlNode.attribute(L"path").as_string();
+				info.strName = S_CW2T(xmlNode.attribute(L"name").as_string());
+				info.strPath = S_CW2T(xmlNode.attribute(L"path").as_string());
 				m_arrFiles.Add(info);
 				xmlNode = xmlNode.next_sibling();
 			}
@@ -123,7 +123,7 @@ namespace SOUI
 		,m_pResFileManger(pResFileManger)
 		,m_pResAdapter(NULL)
 	{
-		m_strProPath = strPath.Mid(0, strPath.ReverseFind(_T('\\')));
+		m_strProPath = strPath.Mid(0, strPath.ReverseFind(_T(PATH_SLASH)));
 	}
 	
 	SResMgrDlg::~SResMgrDlg(void)
@@ -167,7 +167,7 @@ namespace SOUI
 				continue;
 			}
 
-			m_lbResType->AddString(xmlNode.name());
+			m_lbResType->AddString(S_CW2T(xmlNode.name()));
 
 			xmlNode = xmlNode.next_sibling();
 		}
@@ -180,7 +180,7 @@ namespace SOUI
 		{
 			SStringT strText = listbox->GetText(pEvt->nNewSel);
 			CResAdapter *pAdapter = (CResAdapter*)m_lvRes->GetAdapter();
-			pAdapter->Init(m_pResFileManger->m_xmlNodeUiRes.child(L"resource").child(strText),true);
+			pAdapter->Init(m_pResFileManger->m_xmlNodeUiRes.child(L"resource").child(S_CT2W(strText)),true);
 			m_lvRes->SetSel(-1);
 			m_pEdit->GetEventSet()->setMutedState(true);
 			m_pEdit->SetWindowText(_T(""));
@@ -193,7 +193,7 @@ namespace SOUI
 	BOOL SResMgrDlg::OnLvResSelChanged(IEvtArgs *pEvtBase)
 	{
 		m_imgView->Clear();
-		m_txtImageSize->SetWindowText(L"");
+		m_txtImageSize->SetWindowText(_T(""));
 
 		EventLVSelChanged *pEvt = (EventLVSelChanged*)pEvtBase;
 		pugi::xml_node xmlNode;
@@ -216,14 +216,13 @@ namespace SOUI
 
 	void SResMgrDlg::OnNewResType()
 	{
-		SStringT strName;
 		SDlgInput dlg;
 		if (IDOK != dlg.DoModal(m_hWnd))
 		{
 			return;
 		}
 
-		strName = dlg.m_strValue;
+		SStringW strName = S_CT2W(dlg.m_strValue);
 		pugi::xml_node xmlNode = m_pResFileManger->m_xmlNodeUiRes.child(L"resource");
 		if (xmlNode.child(strName))
 		{
@@ -232,7 +231,7 @@ namespace SOUI
 		}
 
 		xmlNode = xmlNode.append_child(strName);
-		int n = m_lbResType->AddString(strName);
+		int n = m_lbResType->AddString(dlg.m_strValue);
 
 		m_lbResType->SetCurSel(n,TRUE);
 		m_lbResType->EnsureVisible(n);
@@ -260,7 +259,7 @@ namespace SOUI
 			return;
 		}
 
-		pugi::xml_node xmlNode = m_pResFileManger->m_xmlNodeUiRes.child(L"resource").child(ListBox_GetCurSelText(m_lbResType));
+		pugi::xml_node xmlNode = m_pResFileManger->m_xmlNodeUiRes.child(L"resource").child(S_CT2W(ListBox_GetCurSelText(m_lbResType)));
 		if (xmlNode)
 		{
 			xmlNode.parent().remove_child(xmlNode);
@@ -294,9 +293,10 @@ namespace SOUI
 				return;
 			}
 
+			SStringW strResTypeW = S_CT2W(strResType);
 			SStringT strFile = strFileName.Mid(m_strProPath.GetLength() + 1);
 
-			pugi::xml_node xmlNode = m_pResFileManger->m_xmlNodeUiRes.child(L"resource").child(strResType).first_child();
+			pugi::xml_node xmlNode = m_pResFileManger->m_xmlNodeUiRes.child(L"resource").child(strResTypeW).first_child();
 			pugi::xml_node xmlNewNode;
 
 			while (xmlNode)
@@ -307,7 +307,7 @@ namespace SOUI
 					continue;
 				}
 
-				if (strFile.CompareNoCase(xmlNode.attribute(L"path").value()) == 0)
+				if (strFile.CompareNoCase(S_CW2T(xmlNode.attribute(L"path").value())) == 0)
 				{
 					break;
 				}
@@ -318,16 +318,16 @@ namespace SOUI
 			if (!xmlNode)
 			{
 				// 如果该不存在该类型的资源，则添加	
-				xmlNewNode = m_pResFileManger->m_xmlNodeUiRes.child(L"resource").child(strResType).append_child(L"file");
+				xmlNewNode = m_pResFileManger->m_xmlNodeUiRes.child(L"resource").child(strResTypeW).append_child(L"file");
 
 				SStringT strResName = GetFilename(strFile);
 				strResName.Replace(_T("\\"), _T("_"));
 				strResName.Replace(_T("."), _T("_"));
 
-				xmlNewNode.append_attribute(L"name").set_value(strResName);
-				xmlNewNode.append_attribute(L"path").set_value(strFile);
+				xmlNewNode.append_attribute(L"name").set_value(strResTypeW);
+				xmlNewNode.append_attribute(L"path").set_value(S_CT2W(strFile));
 				
-				m_pResAdapter->Init(m_pResFileManger->m_xmlNodeUiRes.child(L"resource").child(strResType),false);
+				m_pResAdapter->Init(m_pResFileManger->m_xmlNodeUiRes.child(L"resource").child(strResTypeW),false);
 			}
 
 			//定位到资源
@@ -369,7 +369,7 @@ namespace SOUI
 		}
 
 		SStringT strPath = m_pResAdapter->getFilePath(iFile);
-		pugi::xml_node xmlNode = m_pResFileManger->m_xmlNodeUiRes.child(L"resource").child(strResType).first_child();
+		pugi::xml_node xmlNode = m_pResFileManger->m_xmlNodeUiRes.child(L"resource").child(S_CT2W(strResType)).first_child();
 		while (xmlNode)
 		{
 			if (xmlNode.type() != pugi::node_element)
@@ -377,7 +377,7 @@ namespace SOUI
 				xmlNode = xmlNode.next_sibling();
 				continue;
 			}
-			if (strPath.CompareNoCase(xmlNode.attribute(L"path").value()) == 0)
+			if (strPath.CompareNoCase(S_CW2T(xmlNode.attribute(L"path").value())) == 0)
 			{
 
 				pugi::xml_node xmlNodeP = xmlNode.parent();
@@ -417,13 +417,13 @@ namespace SOUI
 
 	void SResMgrDlg::ShowImage(const SStringT& strImgname)
 	{
-		SStringT strImgPath = m_strProPath + _T("\\") + strImgname;
+		SStringT strImgPath = m_strProPath + _T(SLASH) + strImgname;
 
 		m_imgView->Clear();
 		m_imgView->AddFile(strImgPath);
 		CSize imgSize = m_imgView->GetImgInfo();
 		SStringT strSize;
-		strSize.Format(L"%d * %d", imgSize.cx, imgSize.cy);
+		strSize.Format(_T("%d * %d"), imgSize.cx, imgSize.cy);
 		m_txtImageSize->SetWindowText(strSize);
 	}
 

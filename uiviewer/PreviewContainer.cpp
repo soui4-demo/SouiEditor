@@ -1,11 +1,32 @@
 #include "stdafx.h"
 #include "PreviewContainer.h"
 #include "resource.h"
+#include "bmp.hpp"
+
+static HBITMAP LoadBitmapFromMemory(const BYTE* data, DWORD dataSize)
+{
+	HDC hDC = GetDC(0);
+	const BITMAPFILEHEADER *pBmpFileHeader=(const BITMAPFILEHEADER *)data; 
+	if (pBmpFileHeader->bfType != ((WORD) ('M'<<8)|'B')) 
+	{
+		return NULL; 
+	} 
+	if (pBmpFileHeader->bfSize > dataSize) 
+	{ 
+		return NULL; 
+	} 
+	const LPBITMAPINFO lpBitmap=(const LPBITMAPINFO)(pBmpFileHeader+1); 
+	const BYTE * lpBits=data+pBmpFileHeader->bfOffBits;
+	HBITMAP hBitmap= CreateDIBitmap(hDC,&lpBitmap->bmiHeader,CBM_INIT,lpBits,lpBitmap,DIB_RGB_COLORS);
+	ReleaseDC(0,hDC);
+	return hBitmap;
+}
+
 
 CPreviewContainer::CPreviewContainer(LPCTSTR pszLayoutId, HWND hEditor)
 :m_previewHost(this,pszLayoutId,hEditor)
 {
-	m_hBgBmp = LoadBitmap(SApplication::getSingleton().GetModule(),MAKEINTRESOURCE(IDB_BKGND));
+	m_hBgBmp = LoadBitmapFromMemory(bg_bmp,ARRAYSIZE(bg_bmp));
 }
 
 CPreviewContainer::~CPreviewContainer(void)
@@ -35,7 +56,7 @@ int CPreviewContainer::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	SetScrollMax(KCanvas_Size, KCanvas_Size);
 
-	m_previewHost.CreateNative(NULL,WS_CHILD|WS_VISIBLE|WS_CLIPCHILDREN,0,0,0,0,0,m_hWnd,0,NULL);
+	m_previewHost.CreateEx(m_hWnd,WS_CHILD|WS_VISIBLE|WS_CLIPCHILDREN,0,0,0,0,0,NULL);
 	CRect rcPreview = m_previewHost.GetWindowRect();
 
 	CRect rcHost;
@@ -104,7 +125,8 @@ void CPreviewContainer::OnClose()
 
 void CPreviewContainer::OnEditorExit()
 {
-	OnClose();
+	PostMessage(WM_CLOSE);
+	//OnClose();
 }
 
 void CPreviewContainer::OnPaint(HDC hdc)
@@ -146,7 +168,7 @@ CPoint CPreviewContainer::GetViewPos() const
 void CPreviewContainer::UpdateViewPos()
 {
 	CPoint pt = GetViewPos();
-	m_previewHost.SetWindowPos(NULL,pt.x,pt.y,0,0,SWP_NOZORDER|SWP_NOSIZE);
+	m_previewHost.SetWindowPos(0,pt.x,pt.y,0,0,SWP_NOZORDER|SWP_NOSIZE);
 }
 
 void CPreviewContainer::OnResize()
@@ -156,7 +178,7 @@ void CPreviewContainer::OnResize()
 
 void CPreviewContainer::OnRePos(const POINT *pt)
 {
-	SetWindowPos(NULL,pt->x,pt->y,0,0,SWP_NOSIZE|SWP_NOZORDER);
+	SetWindowPos(0,pt->x,pt->y,0,0,SWP_NOSIZE|SWP_NOZORDER);
 }
 
 BOOL CPreviewContainer::OnEraseBkgnd(HDC hdc)

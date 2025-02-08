@@ -2,9 +2,9 @@
 #include "SImgCanvas.h"
 
 #define INITGUID
-#include <Guiddef.h>
+#include <SGuidDef.h>
 
-DEFINE_GUID(ImageFormatPNG, 0xb96b3caf, 0x0728, 0x11d3, 0x9d, 0x7b, 0x00, 0x00, 0xf8, 0x1e, 0xf3, 0x2e);//copy from gdi+
+DEFINE_SGUID2(ImageFormatPNG, 0xb96b3caf, 0x0728, 0x11d3, 0x9d, 0x7b, 0x00, 0x00, 0xf8, 0x1e, 0xf3, 0x2e);//copy from gdi+
 
 namespace SOUI
 {
@@ -62,9 +62,11 @@ namespace SOUI
 		}
 	}
 
-	BOOL SImgCanvas::AddFile(LPCWSTR pszFileName)
+	BOOL SImgCanvas::AddFile(LPCTSTR pszFileName)
 	{
-		IBitmapS *pImg = SResLoadFromFile::LoadImage(S_CW2T(pszFileName));
+		SStringT strFileName = pszFileName;
+		strFileName.Replace(_T("\\"), _T("/"));
+		IBitmapS *pImg = SResLoadFromFile::LoadImage(strFileName);
 		if (!pImg) return FALSE;
 
 		m_lstImg.AddTail(pImg);

@@ -1,9 +1,7 @@
-﻿#pragma once
-#include "core/shostwnd.h"
-#include "core/smsgloop.h"
+﻿#ifndef _DLG_ABOUT_H_
+#define _DLG_ABOUT_H_
+
 #include "core/SHostDialog.h"
-//#include "control/SRichEdit.h"
-//#include "extend.ctrls/SImageEx.h"
 
 namespace SOUI
 {
@@ -27,7 +25,7 @@ namespace SOUI
 		EVENT_MAP_BEGIN()
 
 			EVENT_ID_COMMAND(IDOK,OnOK)
-			EVENT_MAP_END()
+			EVENT_MAP_END2(SHostDialog)
 
 			BEGIN_MSG_MAP_EX(SDlgAbout)
 			MSG_WM_INITDIALOG(OnInitDialog)
@@ -37,3 +35,5 @@ namespace SOUI
 	};
 
 }
+
+#endif//_DLG_ABOUT_H_

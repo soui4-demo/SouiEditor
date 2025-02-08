@@ -4,8 +4,12 @@
 #include "MainDlg.h"
 #include "Global.h"
 #include "SysdataMgr.h"
+#include "helpapi.h"
 #include <helper/SAppDir.h>
 #include <control/SRealWnd.h>
+#ifdef _WIN32
+#include <shlwapi.h>
+#endif//_WIN32
 
 //编辑界面时XML窗口只显示选择控件的XML文本
 //#define  ONLYSHOWSELXML
@@ -42,22 +46,19 @@ void CXmlEditor::StartPreviewProcess()
 {
 	SAppDir appdir(NULL);
 	SStringT binDir = appdir.AppDir();
-#ifdef _DEBUG
-	SStringT strPreviewExePath = binDir + _T("\\uiviewerd.exe");
-#else
-	SStringT strPreviewExePath = binDir + _T("\\uiviewer.exe");
-#endif
+	SStringT strPreviewExePath = binDir + _T("/uiviewer");
 
-	TCHAR buffer[32] = { 0 };
 	SStringT strCommandLine = strPreviewExePath + _T(" ");
 	strCommandLine += _T("\"");
 	strCommandLine += m_strProPath;
 	strCommandLine += _T("\" ");
 	strCommandLine += m_strLayoutName;
 	strCommandLine += _T(" ");
-	strCommandLine += _ltot((long)m_pMainDlg->m_hWnd, buffer, 10);
+	SStringT strWnd = SStringT().Format(_T("%d"),(int)m_pMainDlg->m_hWnd);
+	strCommandLine += strWnd;
 	strCommandLine += _T(" ");
-	strCommandLine += _ltot((long)m_pViewerHost->GetRealHwnd(), buffer, 10);
+	SStringT strReal = SStringT().Format(_T("%d"),(int)m_pViewerHost->GetRealHwnd());
+	strCommandLine += strReal;
 	
 	PROCESS_INFORMATION pi;
 	STARTUPINFO si;
@@ -66,8 +67,8 @@ void CXmlEditor::StartPreviewProcess()
 	si.wShowWindow = SW_SHOWNORMAL;
 	si.dwFlags = STARTF_USESHOWWINDOW;
 
-	if (!CreateProcess(NULL, (LPTSTR)strCommandLine.c_str(), 
-		NULL, NULL, TRUE, NULL, NULL, NULL, &si, &pi))
+	if (!CreateProcess(0, (LPTSTR)strCommandLine.c_str(), 
+		NULL, NULL, TRUE, 0, NULL, NULL, &si, &pi))
 	{
 		int err = GetLastError();
 		return;
@@ -83,9 +84,10 @@ BOOL CXmlEditor::LoadXml(SStringT strFileName, SStringT layoutName)
 
 	m_bChanged = FALSE;
 	m_strXmlFile = strFileName;
+	m_strXmlFile.ReplaceChar(_T('\\'),_T('/'));
 	m_strLayoutName = layoutName;
 	m_pScintillaWnd->SendMessage(SCI_SETREADONLY, 0, 0);
-	SStringT strPath = m_strProPath + _T("\\") + strFileName;
+	SStringT strPath = m_strProPath + _T(SLASH) + m_strXmlFile;
 	m_pScintillaWnd->OpenFile(strPath);
 
 	if(!layoutName.IsEmpty())
@@ -111,7 +113,7 @@ void CXmlEditor::ReloadLayout()
 	m_treeXmlStruct->Invalidate();
 	if(m_bValidXml)
 	{
-		if(m_strLayoutName.StartsWith(L"layout:",true))
+		if(m_strLayoutName.StartsWith(_T("layout:"),true))
 			m_pMainDlg->SendMsgToViewer(update_buf_id,strUtf8.c_str(),strUtf8.GetLength());
 	}
 	else
@@ -127,7 +129,7 @@ bool CXmlEditor::SaveFile()
 		return false;
 	}
 	
-	return m_pScintillaWnd->SaveFile(m_strProPath + _T("\\")+ m_strXmlFile);
+	return m_pScintillaWnd->SaveFile(m_strProPath + _T(SLASH)+ m_strXmlFile);
 }
 
 bool CXmlEditor::UpdateXmlStruct(spugi::xml_node xmlNode, HSTREEITEM item,int iSib)
@@ -258,12 +260,14 @@ bool CXmlEditor::isDirty() const
 	return m_pScintillaWnd->isDirty();
 }
 
+
 void CXmlEditor::SetProjectPath(const SStringT & strProjPath)
 {
-	m_strProPath = strProjPath;
-	TCHAR *s = m_strProPath.GetBuffer(m_strProPath.GetLength());
-	PathRemoveFileSpec(s);
-	m_strProPath.ReleaseBuffer();
+	int pos = strProjPath.ReverseFind(SLASH);
+	if(pos!=-1)
+		m_strProPath = strProjPath.Left(pos);
+	else
+		m_strProPath = strProjPath;
 }
 
 void CXmlEditor::InsertText(SStringA strText)

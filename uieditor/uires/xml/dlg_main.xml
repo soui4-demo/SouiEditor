@@ -33,8 +33,8 @@
 					<include src="layout:xml_mainwnd_left" />
 				</pane>
 				<pane idealSize="800" minSize="30" priority="0" clipClient="1">
-          <include src="layout:xml_uidesigner_main" />
-        </pane>
+					<include src="layout:xml_uidesigner_main" />
+				</pane>
 				<pane idealSize="250" minSize="30" priority="1" clipClient="1">
 					<include src="layout:xml_mainwnd_right" />
 				</pane>

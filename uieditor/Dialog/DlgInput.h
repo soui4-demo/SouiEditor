@@ -1,6 +1,6 @@
-﻿#pragma once
-#include "core/shostwnd.h"
-#include "core/smsgloop.h"
+﻿#ifndef _DLGINPUT_H_
+#define _DLGINPUT_H_
+
 #include "core/SHostDialog.h"
 
 namespace SOUI
@@ -30,7 +30,7 @@ namespace SOUI
 
 			EVENT_NAME_COMMAND(L"btnOK", OnOK)
 			EVENT_NAME_COMMAND(L"btnCancel", OnClose)
-			EVENT_MAP_END()
+			EVENT_MAP_END2(SHostDialog)
 
 			BEGIN_MSG_MAP_EX(SDlgInput)
 			MSG_WM_INITDIALOG(OnInitDialog)
@@ -46,3 +46,5 @@ namespace SOUI
 	};
 
 }
+
+#endif//_DLGINPUT_H_

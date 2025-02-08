@@ -6,7 +6,7 @@ class CPreviewContainer : public SNativeWnd,IListener
 	CPreviewHost	m_previewHost;
 	HBITMAP			m_hBgBmp;
 public:
-	CPreviewContainer(LPCTSTR pszLayoutId, HWND hEditor = NULL);
+	CPreviewContainer(LPCTSTR pszLayoutId, HWND hEditor = 0);
 	~CPreviewContainer(void);
 
 protected:

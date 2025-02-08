@@ -14,8 +14,8 @@
 		<file name="UIDESIGNER_XML_NEW_SKIN" path="xml\dlg_new_skin.xml" />
 		<file name="UIDESIGNER_XML_INPUT" path="xml\dlg_input.xml" />
 		<file name="UIDESIGNER_XML_ABOUT" path="xml\dlg_about.xml" />
-    <file name="UIDESIGNER_XML_INSERT_ELEMENT" path="xml\dlg_insert_element.xml" />
-  </LAYOUT>
+		<file name="UIDESIGNER_XML_INSERT_ELEMENT" path="xml\dlg_insert_element.xml" />
+	</LAYOUT>
 	<values>
 		<file name="string" path="values\string.xml" />
 		<file name="color" path="values\color.xml" />
@@ -34,11 +34,11 @@
 		<file name="tree_toggle_png" path="image\tree_toggle.png" />
 		<file name="menu_skin_png" path="image\menu_skin.png" />
 		<file name="menu_sep_png" path="image\menu_sep.png" />
-		<file name="png_logo" path="image\logo.png"/>
-    <file name="png_toolbar_state" path="image\toolbar_state.png"/>
-    <file name="png_toolbar_prop" path="image\tb_prop.png"/>
-    <file name="png_btn_help" path="image\btn_help.png"/>
-  </IMG>
+		<file name="png_logo" path="image\logo.png" />
+		<file name="png_toolbar_state" path="image\toolbar_state.png" />
+		<file name="png_toolbar_prop" path="image\tb_prop.png" />
+		<file name="png_btn_help" path="image\btn_help.png" />
+	</IMG>
 	<ICON>
 		<file name="ICON_logo" path="image\soui.ico" />
 	</ICON>

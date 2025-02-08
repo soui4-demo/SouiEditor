@@ -5,7 +5,7 @@
 #define DEFAULT_LINE 10
 class CBaseMcAdapterFix : public SMcAdapterBase
 {
-	SArray<SStringT> m_colNames;
+	SArray<SStringW> m_colNames;
 public:
 	CBaseMcAdapterFix()
 	{		
@@ -29,7 +29,7 @@ public:
 class CBaseAdapterFix : public SAdapterBase
 {	
 	const wchar_t*  KAttrName_Height[3];
-	SArray<SStringT> m_TemplateNames;
+	SArray<SStringW> m_TemplateNames;
 	int m_nItemHeight[3];
 public:
 

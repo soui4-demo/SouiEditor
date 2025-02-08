@@ -1,5 +1,7 @@
-﻿#pragma once
-#include <ShellAPI.h>
+﻿#ifndef _DROP_TARGET_H_
+#define _DROP_TARGET_H_
+
+#include <shellapi.h>
 #include <helper/SUnknown.h>
 
 
@@ -91,3 +93,5 @@ public:
 	IUNKNOWN_BEGIN(IDropTarget)
 	IUNKNOWN_END()
 };
+
+#endif//_DROP_TARGET_H_
