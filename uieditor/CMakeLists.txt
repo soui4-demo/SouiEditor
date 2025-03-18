@@ -21,7 +21,6 @@ set(CURRENT_SRCS
     SouiEditor.cpp
     SouiEditorApp.cpp
     SouiRealWndHandler.cpp
-    SSwitch.cpp
     SysdataMgr.cpp
     XmlEditor.cpp
     XmlParser.cpp
@@ -64,7 +63,6 @@ set(CURRENT_HEADERS
     SImgCanvas.h
     SouiEditorApp.h
     SouiRealWndHandler.h
-    SSwitch.h
     SysdataMgr.h
     xpm_icons.h
     XmlEditor.h
