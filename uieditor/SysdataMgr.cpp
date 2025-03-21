@@ -57,7 +57,7 @@ SStringA CSysDataMgr::GetCtrlAttrAutos(SStringW ctrlname)
 
 void CSysDataMgr::InitCtrlDef()
 {
-	pugi::xml_parse_result result = m_xmlCtrlDef.load_file(m_strConfigDir + _T("/ctrl.xml"));
+	pugi::xml_parse_result result = m_xmlCtrlDef.load_file(m_strConfigDir + _T("/Ctrl.xml"));
 }
 
 pugi::xml_node CSysDataMgr::getCtrlDefNode()
@@ -67,7 +67,7 @@ pugi::xml_node CSysDataMgr::getCtrlDefNode()
 
 void CSysDataMgr::InitSkinProp()
 {
-	m_xmlSkinProp.load_file(m_strConfigDir + _T("/skin.xml"));
+	m_xmlSkinProp.load_file(m_strConfigDir + _T("/Skin.xml"));
 }
 
 pugi::xml_node CSysDataMgr::getSkinDefNode()

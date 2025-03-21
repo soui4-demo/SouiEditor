@@ -1,6 +1,6 @@
 <root>
   <toolbar>
-    <icons class_name="imglist" name="skin_icon" src="file:img\skin_icons.png" states="10"/>
+    <icons class_name="imglist" name="skin_icon" src="file:img/skin_icons.png" states="10"/>
   </toolbar>
   <skins>
     <base visible="0">

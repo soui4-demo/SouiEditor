@@ -29,7 +29,6 @@
 
 #define SYS_NAMED_RESOURCE _T("soui-sys-resource.dll")
 
-SStringT g_CurDir;
 void RegisterExtendControl(SApplication *theApp);
 
 

@@ -19,7 +19,6 @@
 #include "Dialog/DlgInsertXmlElement.h"
 #define kLogTag "maindlg"
 
-extern SStringT g_CurDir;
 
 #define TIMERID_HEART		   101
 
@@ -58,7 +57,7 @@ BOOL CMainDlg::OnInitDialog(HWND hWnd, LPARAM lParam)
 	//======================================================================
 	m_pXmlEdtior = new CXmlEditor(this);
 	m_pXmlEdtior->Init(GetRoot(),this);
-	SStringT strCfgDir = g_CurDir + _T("Config");
+	SStringT strCfgDir = SApplication::getSingletonPtr()->GetAppDir() + _T("/Config");
 	SApplication::getSingleton().SetFilePrefix(strCfgDir);
 	g_SysDataMgr.LoadSysData(strCfgDir);
 
@@ -87,7 +86,7 @@ BOOL CMainDlg::OnInitDialog(HWND hWnd, LPARAM lParam)
 void CMainDlg::LoadAppCfg()
 {
 	pugi::xml_document xmldoc;
-	pugi::xml_parse_result result = xmldoc.load_file(g_CurDir + _T("sEditor.cfg"));
+	pugi::xml_parse_result result = xmldoc.load_file(SApplication::getSingletonPtr()->GetAppDir() + _T("/sEditor.cfg"));
 	if (result)
 	{
 		m_vecRecentFile.clear();
@@ -141,7 +140,7 @@ void CMainDlg::SaveAppCfg()
 		nodeRecent.append_attribute(L"path").set_value(S_CT2W(*it));
 	}
 
-	xmlDoc.save_file(g_CurDir + _T("sEditor.cfg"));
+	xmlDoc.save_file(SApplication::getSingletonPtr()->GetAppDir() + _T("/sEditor.cfg"));
 }
 
 bool CMainDlg::OnTreeproContextMenu(CPoint pt)
