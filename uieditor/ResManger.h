@@ -63,7 +63,7 @@ public:
 
 	SStringT GetSkinXmlName() const;
 
-	void GetSubNodes(pugi::xml_node & parentNode, SStringT parentNodeName);
+	void GetSubNodes(pugi::xml_node & parentNode, SStringW parentNodeName);
 
 	static SStringT RemoveResTypename(const SStringT & resname);
 

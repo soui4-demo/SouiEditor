@@ -10,6 +10,7 @@
 #include "CmdLine.h"
 #include <helper/SAppDir.h>
 #include <interface/SMessageBox-i.h>
+#include <zipresprovider-param.h>
 #include "Global.h"
 #include "../ExtendCtrls/SCtrlsRegister.h"
 #pragma comment(lib, "shlwapi.lib")
@@ -17,7 +18,7 @@
 
 //定义唯一的一个R,UIRES对象,ROBJ_IN_CPP是resource.h中定义的宏。
 #define INIT_R_DATA
-#include "res\resource.h"
+#include "res/resource.h"
 
 //从PE文件加载，注意从文件加载路径位置
 #ifdef _DEBUG
@@ -40,20 +41,6 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
     int nRet = 0;
     SouiFactory souiFac;
     SComMgr *pComMgr = new SComMgr;
-
-    //将程序的运行路径修改到项目所在目录所在的目录
-
-	TCHAR szCurrentDir[MAX_PATH] = { 0 };
-#ifndef _DEBUG
-    GetModuleFileName(NULL, szCurrentDir, sizeof(szCurrentDir));
-    LPTSTR lpInsertPos = _tcsrchr(szCurrentDir, _T('\\'));
-	lpInsertPos[1] = 0;
-    _tcscpy(lpInsertPos + 1, _T("..\\SouiEditor"));
-	SetCurrentDirectory(szCurrentDir);
-#endif
-	GetCurrentDirectory(MAX_PATH,szCurrentDir);
-	g_CurDir = szCurrentDir;
-	g_CurDir += _T("\\");
     {
 
 		Scintilla_RegisterClasses(hInstance);
@@ -70,6 +57,16 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
 
         pRenderFactory->SetImgDecoderFactory(pImgDecoderFactory);
 		SouiEditorApp *theApp = new SouiEditorApp(pRenderFactory, hInstance,ksz_editor_cls);
+		SStringT appDir = theApp->GetAppDir();
+        SetCurrentDirectory(appDir);
+
+		SAutoRefPtr<ILogMgr> logMgr;
+		if(pComMgr->CreateLog4z((IObjRef**)&logMgr)){
+			theApp->SetLogManager(logMgr);
+			logMgr->setLoggerName("uiedtior");
+			logMgr->setLoggerLevel(LOG_LEVEL_INFO);
+			logMgr->start();
+		}
 
 		theApp->RegisterWindowClass<SImageBtnEx>();
 		theApp->RegisterWindowClass<SToolBar>();
@@ -80,33 +77,41 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
 
 		// 注册扩展控件
 		SCtrlsRegister::RegisterCtrls(theApp);
-
-        //从DLL加载系统资源
-        HMODULE hModSysResource = LoadLibrary(SYS_NAMED_RESOURCE);
-        if (hModSysResource)
-        {
-            SAutoRefPtr<IResProvider> sysResProvider;
-            sysResProvider.Attach(souiFac.CreateResProvider(RES_PE));
-            sysResProvider->Init((WPARAM)hModSysResource, 0);
-            theApp->LoadSystemNamedResource(sysResProvider);
-            FreeLibrary(hModSysResource);
-        }else
-        {
-            SASSERT(0);
-        }
-
+#ifdef _WIN32
+		//从DLL加载系统资源
+		HMODULE hModSysResource = LoadLibrary(SYS_NAMED_RESOURCE);
+		if (hModSysResource)
+		{
+			SAutoRefPtr<IResProvider> sysResProvider;
+			sysResProvider.Attach(souiFac.CreateResProvider(RES_PE));
+			sysResProvider->Init((WPARAM)hModSysResource, 0);
+			theApp->LoadSystemNamedResource(sysResProvider);
+			FreeLibrary(hModSysResource);
+		}
+		else
+		{
+			SASSERT(0);
+		}
+#else
+		IResProvider* sysResProvider;
+		bLoaded = pComMgr->CreateResProvider_ZIP((IObjRef**)&sysResProvider);
+		SASSERT_FMT(bLoaded, _T("load interface [%s] failed!"), _T("resprovider_zip"));
+		ZIPRES_PARAM param;
+		ZipFile(&param,theApp->GetRenderFactory(),"soui-sys-resource.zip");
+		bLoaded = sysResProvider->Init((WPARAM)&param, 0);
+		SASSERT(bLoaded);
+		if(bLoaded){
+			theApp->LoadSystemNamedResource(sysResProvider);
+		}
+		sysResProvider->Release();
+#endif
         SAutoRefPtr<IResProvider>   pResProvider;
-#if (RES_TYPE == 0)
 		pResProvider.Attach(souiFac.CreateResProvider(RES_FILE));
-        if (!pResProvider->Init((LPARAM)_T("uires"), 0))
+        if (!pResProvider->Init((LPARAM)_T("uieditor_uires"), 0))
         {
             SASSERT(0);
             return 1;
         }
-#else 
-        pResProvider.Attach(souiFac.CreateResProvider(RES_PE));
-        pResProvider->Init((WPARAM)hInstance, 0);
-#endif
 
 		theApp->InitXmlNamedID((const LPCWSTR*)&R.name, (const int*)&R.id,sizeof(R.id)/sizeof(int));
         theApp->AddResProvider(pResProvider);
@@ -142,3 +147,9 @@ int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
     OleUninitialize();
     return nRet;
 }
+
+#ifndef _WIN32
+int main(int argc,char **argv){
+	return _tWinMain(GetModuleHandle(NULL),0,GetCommandLine(),SW_SHOWDEFAULT);
+}
+#endif//_WIN32

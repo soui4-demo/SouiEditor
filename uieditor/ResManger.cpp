@@ -29,7 +29,7 @@ void ResManger::LoadUIResFromFile(SStringT strPath)
 
 void ResManger::ReleaseUIRes()
 {
-	m_strUIResFile = m_strProPath = L"";
+	m_strUIResFile = m_strProPath = _T("");
 
 	m_mapResFile.RemoveAll();
 	m_mapXmlFile.RemoveAll();
@@ -38,11 +38,11 @@ void ResManger::ReleaseUIRes()
 	m_mapColors.RemoveAll();
 	m_mapStyles.RemoveAll();
 
-	m_strSkinFile = L"";
-	m_strStringFile = L"";
-	m_strColorFile = L"";
-	m_strStyleFile = L"";
-	m_strObjattrFile = L"";
+	m_strSkinFile = _T("");
+	m_strStringFile = _T("");
+	m_strColorFile =  _T("");
+	m_strStyleFile = _T("");
+	m_strObjattrFile =  _T("");
 
 	m_xmlDocSkin.reset();
 	m_xmlDocString.reset();
@@ -73,14 +73,15 @@ pugi::xml_node ResManger::GetResFirstNode(const SStringT tagname)
 	if (tagname == _T("objattr"))
 		xmlDoc = &m_xmlDocObjattr;
 
+	SStringW tagNameW=S_CT2W(tagname);
 	pugi::xml_node xmlNode;
-	if (xmlDoc->child(tagname))
+	if (xmlDoc->child(tagNameW))
 	{
-		xmlNode = xmlDoc->child(tagname).first_child();
+		xmlNode = xmlDoc->child(tagNameW).first_child();
 	}
 	else if (xmlDoc->child(L"UIDEF"))
 	{
-		xmlNode = xmlDoc->child(L"UIDEF").child(tagname).first_child();
+		xmlNode = xmlDoc->child(L"UIDEF").child(tagNameW).first_child();
 	}
 	return xmlNode;
 }
@@ -101,15 +102,6 @@ void ResManger::LoadUIRes()
 	pugi::xml_node xmlNode = m_xmlNodeUiRes.child(L"resource").first_child();
 	GetSubNodes(xmlNode, L"");
 	
-/*  // 测试代码
-	SPOSITION pos = m_mapXmlFile.GetStartPosition();
-	while (pos)
-	{
-		auto aa = m_mapXmlFile.GetAt(pos);
-		m_mapXmlFile.GetNext(pos);
-	}
-*/
-
 	// 获取 Init.xml 文件名
 	pugi::xml_node xmlNode_init = m_xmlNodeUiRes.child(L"resource").child(L"UIDEF").first_child();
 
@@ -125,56 +117,46 @@ void ResManger::LoadUIRes()
 		}
 	}
 
-	SStringW strPath;
-	strPath = xmlNode_init.attribute(L"path").value();
-	//while (xmlNode)
-	//{
-	//	SStringW str(L"XML_INIT");
-	//	if (str.CompareNoCase(xmlNode.attribute(L"name").value()) == 0 )
-	//	{
-	//		strPath = xmlNode.attribute(L"path").value();
-	//		break;
-	//	}
-	//	xmlNode = xmlNode.next_sibling();
-	//}
+	SStringW strPath = xmlNode_init.attribute(L"path").value();
 
 	if (!strPath.IsEmpty())
 	{
-		m_strInitFile = m_strProPath + _T("\\") + strPath;
+		m_strInitFile = m_strProPath + _T("/") + S_CW2T(strPath);
 	}
 
 	if (xmlNode.attribute(L"skin"))
 	{
-		m_strSkinFile = xmlNode.attribute(L"path").value();
+		m_strSkinFile = S_CW2T(xmlNode.attribute(L"path").value());
 	}
 	if (xmlNode.attribute(L"string"))
 	{
-		m_strStringFile = xmlNode.attribute(L"path").value();
+		m_strStringFile = S_CW2T(xmlNode.attribute(L"path").value());
 	}
 	if (xmlNode.attribute(L"color"))
 	{
-		m_strColorFile = xmlNode.attribute(L"path").value();
+		m_strColorFile = S_CW2T(xmlNode.attribute(L"path").value());
 	}
 	if (xmlNode.attribute(L"style"))
 	{
-		m_strStyleFile = xmlNode.attribute(L"path").value();
+		m_strStyleFile = S_CW2T(xmlNode.attribute(L"path").value());
 	}
 	if (xmlNode.attribute(L"objattr"))
 	{
-		m_strObjattrFile = xmlNode.attribute(L"path").value();
+		m_strObjattrFile = S_CW2T(xmlNode.attribute(L"path").value());
 	}
 }
 
-void ResManger::GetSubNodes(pugi::xml_node& parentNode, SStringT parentNodeName)
+void ResManger::GetSubNodes(pugi::xml_node& parentNode, SStringW parentNodeName)
 {
 	while (parentNode)
 	{
 		if (parentNode.type() == pugi::node_element)
 		{
-			SStringT strParentName = parentNode.name();
+			SStringW strParentName = parentNode.name();
 			if (parentNode.first_child() != NULL)
 			{
-				GetSubNodes(parentNode.first_child(), strParentName + L":");
+				pugi::xml_node childNode = parentNode.first_child();
+				GetSubNodes(childNode, strParentName + L":");
 			}
 			else
 			{
@@ -185,16 +167,17 @@ void ResManger::GetSubNodes(pugi::xml_node& parentNode, SStringT parentNodeName)
 					strPath = parentNode.attribute(L"path").value();
 					if (!strName.IsEmpty() && !strPath.IsEmpty())
 					{
-						SStringT strKey = parentNodeName + strName;
+						SStringT strKey = S_CW2T(parentNodeName + strName);
 						strKey.MakeLower();
-						SStringT extname = GetFileExtname(strPath);
+						SStringT strPathT=S_CW2T(strPath);
+						SStringT extname = GetFileExtname(strPathT);
 						if (extname.CompareNoCase(_T(".xml")) == 0)
 						{
-							m_mapXmlFile[strKey] = strPath;
+							m_mapXmlFile[strKey] = strPathT;
 						}
 						else
 						{
-							m_mapResFile[strKey] = strPath;
+							m_mapResFile[strKey] = strPathT;
 						}
 					}
 				}
@@ -226,7 +209,7 @@ SStringT ResManger::GetResPathByName(const SStringT& resname)
 	if (pFilePair == NULL)
 		return _T("");
 
-	return m_strProPath + _T("\\") + pFilePair->m_value;
+	return m_strProPath + _T(SLASH) + pFilePair->m_value;
 }
 
 void ResManger::LoadResFileEx(SStringT& filepath, pugi::xml_document& xmlDoc, SStringT tagname)
@@ -240,24 +223,24 @@ void ResManger::LoadResFileEx(SStringT& filepath, pugi::xml_document& xmlDoc, SS
 		pugi::xml_parse_result result = xmlDoc.load_file(m_strInitFile, pugi::parse_full);
 		if (result)
 		{
-			pugi::xml_node xmlNode1 = xmlDoc.child(L"UIDEF").child(tagname);
+			pugi::xml_node xmlNode1 = xmlDoc.child(L"UIDEF").child(S_CT2W(tagname));
 			if (xmlNode1.attribute(L"src"))
 			{
-				SStringT strSrc = xmlNode1.attribute(L"src").value();
+				SStringT strSrc = S_CW2T(xmlNode1.attribute(L"src").value());
 				const SMap<SStringT, SStringT>::CPair * pFilePair = m_mapXmlFile.Lookup(strSrc);
 				if (pFilePair == NULL)
 				{
-					SASSERT_FMTW(L"Locating filepath failed, src=%s", (LPCTSTR)strSrc);
+					SASSERT_FMT(_T("Locating filepath failed, src=%s"), strSrc.c_str());
 					return;
 				}
 				
-				filepath = m_strProPath + _T("\\") + pFilePair->m_value;
+				filepath = m_strProPath + _T(SLASH) + pFilePair->m_value;
 				result = xmlDoc.load_file(filepath, pugi::parse_full);
 				if (!result)
 				{
 					SStringT tmpstr;
 					tmpstr.Format(_T("加载%s文件失败"), tagname);
-					SMessageBox(NULL, _T("Resmgr"), tmpstr, MB_OK);
+					SMessageBox(0, _T("Resmgr"), tmpstr, MB_OK);
 				}
 			}
 		}
@@ -276,9 +259,9 @@ void ResManger::LoadSkinNode(pugi::xml_node xmlNode)
 		}
 
 		SStringT s1, s2, s3;
-		s1 = xmlNode.name();
-		s2 = xmlNode.attribute(L"name").value();
-		s3 = xmlNode.attribute(L"src").value();
+		s1 = S_CW2T(xmlNode.name());
+		s2 = S_CW2T(xmlNode.attribute(L"name").value());
+		s3 = S_CW2T(xmlNode.attribute(L"src").value());
 
 		m_mapSkins[s2] = SkinItem(s1, s2, s3, xmlNode);
 		xmlNode = xmlNode.next_sibling();
@@ -306,8 +289,8 @@ void ResManger::LoadStringFile()
 		}
 
 		SStringT s1, s2;
-		s1 = xmlNode.name();
-		s2 = xmlNode.attribute(L"value").value();
+		s1 = S_CW2T(xmlNode.name());
+		s2 = S_CW2T(xmlNode.attribute(L"value").value());
 
 		m_mapStrings[s1] = ValueItem(s1, s2);
 		xmlNode = xmlNode.next_sibling();
@@ -328,8 +311,8 @@ void ResManger::LoadColorFile()
 		}
 
 		SStringT s1, s2;
-		s1 = xmlNode.name();
-		s2 = xmlNode.attribute(L"value").value();
+		s1 = S_CW2T(xmlNode.name());
+		s2 = S_CW2T(xmlNode.attribute(L"value").value());
 
 		m_mapColors[s1] = ValueItem(s1, s2);
 		xmlNode = xmlNode.next_sibling();
@@ -418,7 +401,7 @@ SStringA ResManger::GetSkinAutos(SStringT prev)
 	}
 	strAuto.TrimRight(' ');
 
-	SStringA str = S_CW2A(strAuto, CP_UTF8);
+	SStringA str = S_CT2A(strAuto, CP_UTF8);
 	return str;
 }
 
@@ -433,13 +416,13 @@ SStringA ResManger::GetStyleAutos(SStringT prev)
 
 		m_mapStyles.GetNext(pos);
 	}
-	std::sort(vecTemp.begin(), vecTemp.end(), SortSStringNoCase);
+	std::sort(vecTemp.begin(), vecTemp.end(), SortSStringNoCaseW);
 
 	SStringW strAuto;
 	std::vector<SStringW>::iterator it = vecTemp.begin();
 	for (; it != vecTemp.end(); it++)
 	{
-		strAuto += prev;
+		strAuto += S_CT2W(prev);
 		strAuto += *it + L" ";
 	}
 	strAuto.TrimRight(' ');
@@ -470,7 +453,7 @@ SStringA ResManger::GetStringAutos(SStringT prev)
 	}
 	strAuto.TrimRight(' ');
 
-	SStringA str = S_CW2A(strAuto, CP_UTF8);
+	SStringA str = S_CT2A(strAuto, CP_UTF8);
 	return str;
 }
 
@@ -496,7 +479,7 @@ SStringA ResManger::GetColorAutos(SStringT prev)
 	}
 	strAuto.TrimRight(' ');
 
-	SStringA str = S_CW2A(strAuto, CP_UTF8);
+	SStringA str = S_CT2A(strAuto, CP_UTF8);
 	return str;
 }
 

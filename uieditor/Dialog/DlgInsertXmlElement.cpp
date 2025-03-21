@@ -1,7 +1,9 @@
 #include "stdafx.h"
 #include "DlgInsertXmlElement.h"
 #include "propgrid/propitem/SPropertyItem-Option.h"
+#ifdef _WIN32
 #include "souidlgs.h"
+#endif//_WIN32
 
 namespace SOUI{
 	DlgInsertXmlElement::DlgInsertXmlElement(ResManger * resMgr,pugi::xml_node xmlInitProp,SStringW strNodeName)
@@ -85,7 +87,7 @@ namespace SOUI{
 		if(pItem->GetType() != PT_GROUP)
 		{
 			spugi::xml_node root = m_xmlDoc.root().first_child();
-			SStringA name = S_CT2A(pItem->GetName2(),CP_UTF8);
+			SStringA name = S_CW2A(pItem->GetName2(),CP_UTF8);
 			if(pItem->HasValue())
 			{
 				SStringA value = S_CT2A(pItem->GetValue(), CP_UTF8);
@@ -117,7 +119,7 @@ namespace SOUI{
 	{
 		m_strXml = m_xmlEditor->GetWindowText();
 		m_strXml += "\0x0a\0x0d";
-		__super::OnDestroy();
+		SHostDialog::OnDestroy();
 	}
 
 	SStringA DlgInsertXmlElement::GetXml() const
@@ -188,15 +190,16 @@ namespace SOUI{
 		EventPropGridItemButtonClick *e2 = sobj_cast<EventPropGridItemButtonClick>(e);
 		SStringW strExType = e2->pItem->GetExtendType();
 
-		if(strExType == _T("font"))
+		if(strExType == L"font")
 		{
 			LOGFONT lf={0};
+			#ifdef _WIN32
 			CFontDialog fontDlg(&lf, CF_SCREENFONTS|CF_NOVERTFONTS);
 			if(fontDlg.DoModal()== IDOK)
 			{
 				lf = fontDlg.m_lf;
 				FontInfo fi;
-				fi.strFaceName = lf.lfFaceName;
+				fi.strFaceName = S_CT2W(lf.lfFaceName);
 				fi.style.attr.nSize = abs(lf.lfHeight);
 				fi.style.attr.byWeight = lf.lfWeight/4;
 				fi.style.attr.byCharset = lf.lfCharSet;
@@ -209,8 +212,11 @@ namespace SOUI{
 					fi.style.attr.byWeight = 0;
 				}
 				SStringW strFontDesc = SFontPool::FontInfoToString(fi);
-				e2->pItem->SetValue(strFontDesc);
+				e2->pItem->SetValue(S_CW2T(strFontDesc));
 			}
+			#else
+			//todo:hjx
+			#endif//_WIN32
 		}
 	}
 

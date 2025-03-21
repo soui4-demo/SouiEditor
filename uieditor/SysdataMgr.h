@@ -36,7 +36,7 @@ public:
 	SStringA GetCtrlAutos();
 
 	// 获取指定控件的自动完成字串
-	SStringA GetCtrlAttrAutos(SStringT ctrlname);
+	SStringA GetCtrlAttrAutos(SStringW ctrlname);
 
 	SStringA GetSkinAutos();
 

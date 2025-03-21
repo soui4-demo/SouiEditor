@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include "ScintillaWnd.h"
-#include <shlwapi.h>
+#include <shellapi.h>
 
 #include "Scintilla.h"
 #include "SciLexer.h"
@@ -61,7 +61,7 @@ void CScintillaWnd::UpdateLineNumberWidth(void)
 	int  iLineMarginWidthFit;
 
 	sprintf((tchLines), (" %i "),
-		SendMessage(SCI_GETLINECOUNT, 0, 0));
+		(int)SendMessage(SCI_GETLINECOUNT, 0, 0));
 
 	iLineMarginWidthNow = SendMessage(
 		SCI_GETMARGINWIDTHN, 0, 0);
@@ -93,7 +93,7 @@ static const LPBYTE map_file(LPCTSTR name, LPDWORD filesize)
 	if (hFile != INVALID_HANDLE_VALUE)
 	{
 		hMapping = CreateFileMapping(hFile, NULL, PAGE_READONLY, 0, 0, NULL);
-		if (hMapping)
+		if (hMapping != INVALID_HANDLE_VALUE)
 		{
 			ptr = (LPBYTE)MapViewOfFile(hMapping, FILE_MAP_READ, 0, 0, 0);
 			CloseHandle(hMapping);
@@ -181,7 +181,7 @@ void CScintillaWnd::SetDirty(bool bDirty)
 
 void CScintillaWnd::GetRange(int start, int end, char* text)
 {
-	TEXTRANGEA tr;
+	Sci_TextRange tr;
 	tr.chrg.cpMin = start;
 	tr.chrg.cpMax = end;
 	tr.lpstrText = (text);
@@ -454,8 +454,8 @@ SStringA CScintillaWnd::GetNotePart(int curPos)
 		return tagname;
 
 	Sci_TextRange sci_tr;
-	sci_tr.chrg.cpMin = min(curPos,startPos);
-	sci_tr.chrg.cpMax = max(curPos,startPos);
+	sci_tr.chrg.cpMin = smin(curPos,startPos);
+	sci_tr.chrg.cpMax = smax(curPos,startPos);
 
 	int len = sci_tr.chrg.cpMax - sci_tr.chrg.cpMin;
 

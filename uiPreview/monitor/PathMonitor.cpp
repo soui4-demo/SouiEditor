@@ -1,6 +1,6 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "PathMonitor.h"
-#include "MainDlg.h"
+#include "../src/MainDlg.h"
 #include <helper/SFunctor.hpp>
 
 CPathMonitor::CPathMonitor(CMainDlg *pMainDlg):m_pMainDlg(pMainDlg)

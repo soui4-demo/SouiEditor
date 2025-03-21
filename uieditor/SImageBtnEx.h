@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include <core/Swnd.h>
+#include <core/SWnd.h>
 #include <control/SCmnCtrl.h>
 
 namespace SOUI

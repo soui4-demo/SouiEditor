@@ -17,6 +17,7 @@
 #include "Global.h"
 #include "Dialog/DlgResMgr.h"
 #include "Dialog/DlgInsertXmlElement.h"
+#define kLogTag "maindlg"
 
 extern SStringT g_CurDir;
 
@@ -86,7 +87,7 @@ BOOL CMainDlg::OnInitDialog(HWND hWnd, LPARAM lParam)
 void CMainDlg::LoadAppCfg()
 {
 	pugi::xml_document xmldoc;
-	pugi::xml_parse_result result = xmldoc.load_file(g_CurDir + L"sEditor.cfg");
+	pugi::xml_parse_result result = xmldoc.load_file(g_CurDir + _T("sEditor.cfg"));
 	if (result)
 	{
 		m_vecRecentFile.clear();
@@ -100,7 +101,7 @@ void CMainDlg::LoadAppCfg()
 		pugi::xml_node recentItem = recentNode.first_child();
 		while (recentItem)
 		{
-			SStringT filepath = recentItem.attribute(L"path").as_string();
+			SStringT filepath = S_CW2T(recentItem.attribute(L"path").as_string());
 			m_vecRecentFile.push_back(filepath);
 
 			recentItem = recentItem.next_sibling();
@@ -115,7 +116,7 @@ void CMainDlg::LoadAppCfg()
 	UINT MenuId = MenuId_Start;
 	for (std::vector<SStringT>::iterator it = m_vecRecentFile.begin();it != m_vecRecentFile.end();it++)
 	{
-		m_RecentFileMenu.InsertMenu(0, MF_BYCOMMAND|MF_BYPOSITION, MenuId++, (*it) + L"  ");
+		m_RecentFileMenu.InsertMenu(0, MF_BYCOMMAND|MF_BYPOSITION, MenuId++, (*it) + _T("  "));
 	}
 }
 
@@ -137,10 +138,10 @@ void CMainDlg::SaveAppCfg()
 	for (std::vector<SStringT>::iterator it = m_vecRecentFile.begin();it != m_vecRecentFile.end();it++)
 	{
 		pugi::xml_node nodeRecent = nodeRecents.append_child(L"item");
-		nodeRecent.append_attribute(L"path").set_value(*it);
+		nodeRecent.append_attribute(L"path").set_value(S_CT2W(*it));
 	}
 
-	xmlDoc.save_file(g_CurDir + L"sEditor.cfg");
+	xmlDoc.save_file(g_CurDir + _T("sEditor.cfg"));
 }
 
 bool CMainDlg::OnTreeproContextMenu(CPoint pt)
@@ -217,7 +218,7 @@ void CMainDlg::OnTimer(UINT_PTR timeID)
 {
 	if (timeID == TIMERID_HEART)
 	{
-		::SendMessage(m_hViewer, kmsg_heart, (WPARAM)0, (LPARAM)0);
+		::PostMessage(m_hViewer, kmsg_heart, (WPARAM)0, (LPARAM)0);
 	}
 	else
 	{
@@ -294,7 +295,7 @@ void CMainDlg::OpenProject(SStringT strFileName)
 	m_xmlDocUiRes.reset();
 	
 	SStringT strFile = strFileName;
-	int n = strFileName.ReverseFind(_T('\\'));
+	int n = strFileName.ReverseFind(_T(SLASH));
 	m_strUiresPath = strFileName;
 	m_strProPath = strFileName.Mid(0, n);
 	
@@ -355,14 +356,14 @@ void CMainDlg::OpenProject(SStringT strFileName)
 		const SMap<SStringT, SStringT>::CPair* item = m_UIResFileMgr.m_mapXmlFile.GetAt(pos);
 		SStringT strLayoutName = _T("LAYOUT");
 		strLayoutName.MakeLower();
-		if (item->m_key.Find(strLayoutName + L":") == -1)
+		if (item->m_key.Find(strLayoutName + _T(":")) == -1)
 		{
 			vecTemp.push_back(item->m_key);
 		}
 		m_UIResFileMgr.m_mapXmlFile.GetNext(pos);
 	}
 
-	m_lbWorkSpaceXml->AddString(UIRES_FILE);
+	m_lbWorkSpaceXml->AddString(S_CW2T(UIRES_FILE));
 	std::sort(vecTemp.begin(), vecTemp.end(), SortSStringNoCase);
 	std::vector<SStringT>::iterator it = vecTemp.begin();
 	for (; it != vecTemp.end(); it++)
@@ -411,7 +412,7 @@ void CMainDlg::OnBtnNewLayout()
 	SDlgNewLayout DlgNewDialog(_T("layout:UIDESIGNER_XML_NEW_LAYOUT"), m_strProPath);
 	if (IDOK == DlgNewDialog.DoModal(m_hWnd))
 	{
-		CopyFile(CSysDataMgr::getSingleton().GetConfigDir() + _T("\\LayoutTmpl\\Dialog.xml"), DlgNewDialog.m_strPath, FALSE);
+		CopyFile(CSysDataMgr::getSingleton().GetConfigDir() + _T("/LayoutTmpl/Dialog.xml"), DlgNewDialog.m_strPath, FALSE);
 		NewLayout(DlgNewDialog.m_strName, DlgNewDialog.m_strPath);
 
 		SStringT *strShortPath = new SStringT(DlgNewDialog.m_strPath.Mid(m_strProPath.GetLength() + 1));
@@ -517,7 +518,7 @@ void CMainDlg::OnWorkspaceXMLDbClick(IEvtArgs * pEvtBase)
 		SMap<SStringT, SStringT>::CPair *p = m_UIResFileMgr.m_mapXmlFile.Lookup(strText);  //查找
 		if (p == NULL)
 		{
-			filename = UIRES_FILE;
+			filename = S_CW2T(UIRES_FILE);
 		}
 		else
 			filename += p->m_value;
@@ -573,13 +574,13 @@ BOOL CMainDlg::NewLayout(SStringT strResName, SStringT strPath)
 {
 	SStringT strShortPath = strPath.Mid(m_strProPath.GetLength() + 1);
 
-	pugi::xml_node xmlNode = m_xmlDocUiRes.child(_T("resource")).child(_T("LAYOUT"));
+	pugi::xml_node xmlNode = m_xmlDocUiRes.child(L"resource").child(L"LAYOUT");
 
 	if (xmlNode)
 	{
-		pugi::xml_node Child = xmlNode.append_child(_T("file"));
-		Child.append_attribute(_T("name")).set_value(strResName);
-		Child.append_attribute(_T("path")).set_value(strShortPath);
+		pugi::xml_node Child = xmlNode.append_child(L"file");
+		Child.append_attribute(L"name").set_value(S_CT2W(strResName));
+		Child.append_attribute(L"path").set_value(S_CT2W(strShortPath));
 
 		m_xmlDocUiRes.save_file(m_strUIResFile);
 	}
@@ -612,7 +613,7 @@ BOOL CMainDlg::OnDrop(LPCTSTR pszName)
 
 void CMainDlg::OnInsertWidget(CWidgetTBAdapter::IconInfo *info)
 {
-	DlgInsertXmlElement dlg(&m_UIResFileMgr,g_SysDataMgr.getCtrlDefNode().child(L"controls"),info->strElement);
+	DlgInsertXmlElement dlg(&m_UIResFileMgr,g_SysDataMgr.getCtrlDefNode().child(L"controls"),S_CT2W(info->strElement));
 	if(IDOK==dlg.DoModal())
 	{
 		m_pXmlEdtior->InsertText(dlg.GetXml());
@@ -621,7 +622,7 @@ void CMainDlg::OnInsertWidget(CWidgetTBAdapter::IconInfo *info)
 
 void CMainDlg::OnInertSkin(CSkinTBAdapter::IconInfo * info)
 {
-	DlgInsertXmlElement dlg(&m_UIResFileMgr,g_SysDataMgr.getSkinDefNode().child(L"skins"),info->strElement);
+	DlgInsertXmlElement dlg(&m_UIResFileMgr,g_SysDataMgr.getSkinDefNode().child(L"skins"),S_CT2W(info->strElement));
 	if(IDOK==dlg.DoModal())
 	{
 		m_pXmlEdtior->InsertText(dlg.GetXml());

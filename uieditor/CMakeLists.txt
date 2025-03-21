@@ -102,6 +102,11 @@ source_group("Resource Files" FILES ${CURRENT_RC})
 
 add_executable(uieditor WIN32 ${CURRENT_HEADERS} ${CURRENT_SRCS} ${CURRENT_SOUIS} ${CURRENT_RC})
 
-target_link_libraries(uieditor soui4 utilities4 Scintilla ExtendCtrls imm32)
+target_link_libraries(uieditor soui4 utilities4 Scintilla ExtendCtrls)
+if(CMAKE_SYSTEM_NAME MATCHES "Windows")
+target_link_libraries(uieditor imm32)
+else()
+target_link_libraries(uieditor swinx)
+endif()
 
 target_precompile_headers(uieditor PRIVATE "stdafx.h")

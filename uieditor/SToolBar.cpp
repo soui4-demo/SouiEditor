@@ -33,8 +33,8 @@ namespace SOUI
 				item.iIcon = xmlItem.attribute(L"iconIndex").as_int(0);
 				item.nId = xmlItem.attribute(L"id").as_int(0);
 				item.lParam = xmlItem.attribute(L"data").as_uint(0);
-				item.strText = xmlItem.attribute(L"text").as_string();
-				item.strTip = xmlItem.attribute(L"tip").as_string();
+				item.strText = S_CW2T(xmlItem.attribute(L"text").as_string());
+				item.strTip = S_CW2T(xmlItem.attribute(L"tip").as_string());
 				item.dwState = xmlItem.attribute(L"disable").as_bool(false)?WndState_Disable:WndState_Normal;
 				if(xmlItem.attribute(L"checked").as_bool(false))
 					item.dwState|=WndState_Check;
@@ -290,7 +290,7 @@ namespace SOUI
 
 	void SToolBar::OnLButtonDown(UINT nFlags,CPoint pt)
 	{
-		__super::OnLButtonDown(nFlags,pt);
+		__baseCls::OnLButtonDown(nFlags,pt);
 		int iItem = HitTest(pt);
 		if(iItem!=-1)
 		{
@@ -313,7 +313,7 @@ namespace SOUI
 
 	void SToolBar::OnLButtonUp(UINT nFlags,CPoint pt)
 	{
-		__super::OnLButtonUp(nFlags,pt);
+		__baseCls::OnLButtonUp(nFlags,pt);
 		if(m_iClickItem!=-1)
 		{
 			m_arrItems[m_iClickItem].dwState &= ~WndState_PushDown;
@@ -348,7 +348,7 @@ namespace SOUI
 
 	void SToolBar::OnMouseMove(UINT nFlags,CPoint pt)
 	{
-		__super::OnMouseMove(nFlags,pt);
+		__baseCls::OnMouseMove(nFlags,pt);
 		if(m_iClickItem == -1)
 		{
 			int iItem = HitTest(pt);
@@ -390,7 +390,7 @@ namespace SOUI
 
 	void SToolBar::OnSize(UINT nType, CSize size)
 	{
-		__super::OnSize(nType,size);
+		__baseCls::OnSize(nType,size);
 		UpdateVisibleItemCount();
 	}
 
@@ -553,7 +553,8 @@ namespace SOUI
 	{
 		SMenu menu;
 		menu.SetIconSkin(m_skinIcons);
-		menu.LoadMenu2(&m_menuStyle.root().child(L"menuStyle"));
+		SXmlNode xmlNode = m_menuStyle.root().child(L"menuStyle");
+		menu.LoadMenu2(&xmlNode);
  		for(int i=m_nVisibleItems;i<m_arrItems.GetCount();i++)
  		{
 			UINT uFlag = IsSeparator(&m_arrItems[i])?MF_SEPARATOR:MF_STRING;

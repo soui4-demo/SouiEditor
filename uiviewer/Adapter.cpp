@@ -1,5 +1,4 @@
-﻿#pragma once
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "helper/SAdapterBase.h"
 #include "Adapter.h"
 #include "PreviewHost.h"
@@ -23,12 +22,12 @@ void CBaseMcAdapterFix::InitColNames(SXmlNode xmlTemplate)
 {
 	for (xmlTemplate = xmlTemplate.first_child(); xmlTemplate; xmlTemplate = xmlTemplate.next_sibling())
 	{
-		if (pugi::node_element != xmlTemplate.type())
+		if (node_element != xmlTemplate.type())
 			continue;
 
 		while (xmlTemplate && !xmlTemplate.attribute(L"name"))
 		{
-			if (pugi::node_element != xmlTemplate.type())
+			if (node_element != xmlTemplate.type())
 			{
 				xmlTemplate = xmlTemplate.next_sibling();
 				continue;
@@ -52,14 +51,7 @@ int CBaseAdapterFix::IniTemplateNames(SXmlNode xmlTemplate)
 {
 	for (xmlTemplate = xmlTemplate.first_child(); xmlTemplate; xmlTemplate = xmlTemplate.next_sibling())
 	{
-		//TODO: 此法有待验证
-		/*
-		if (static_cast<SWindowFactoryMgr*>(SApplication::getSingletonPtr())->HasKey(xmlTemplate.name()))
-		{
-			return 0;
-		}
-		*/
-		if (pugi::node_element == xmlTemplate.type())
+		if (node_element == xmlTemplate.type())
 			m_TemplateNames.Add(xmlTemplate.name());
 	}
 	return m_TemplateNames.GetCount();
@@ -92,7 +84,7 @@ int CBaseAdapterFix::getItemViewType(int position, DWORD dwState)
 		else
 			return 1;//even lines 
 	}
-	return __super::getItemViewType(position, dwState);
+	return SAdapterBase::getItemViewType(position, dwState);
 }
 
 SIZE CBaseAdapterFix::getViewDesiredSize(int position, SItemPanel *pItem, int wid,int hei)
@@ -111,7 +103,8 @@ void CBaseAdapterFix::getView(int position, SItemPanel * pItem, SXmlNode xmlTemp
 		else
 		{
 			int nViewType = getItemViewType(position, pItem->GetState());
-			pItem->InitFromXml(&xmlTemplate.child(m_TemplateNames[nViewType < m_TemplateNames.GetCount() - 1 ? nViewType : m_TemplateNames.GetCount() - 1]));
+			SXmlNode xmlNode = xmlTemplate.child(m_TemplateNames[nViewType < m_TemplateNames.GetCount() - 1 ? nViewType : m_TemplateNames.GetCount() - 1]);
+			pItem->InitFromXml(&xmlNode);
 		}
 	}
 }

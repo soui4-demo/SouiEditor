@@ -103,7 +103,7 @@ static const char *minus_xpm[] = {
 "hemgdgc#h"
 };
 
-static char * acTop_xpm[] = {
+static const char * acTop_xpm[] = {
 "12 12 56 1",
 " 	c #FFFFFF",
 ".	c #8AB2E9",
@@ -175,7 +175,7 @@ static char * acTop_xpm[] = {
 "    pq      "};
 
 
-static char * acBottom_xpm[] = {
+static const char * acBottom_xpm[] = {
 "12 12 54 1",
 " 	c #FFFFFF",
 ".	c #C4D7F3",
@@ -245,7 +245,7 @@ static char * acBottom_xpm[] = {
 "         no "};
 
 /* XPM */
-static char * bookmark_xpm[] = {
+static const char * bookmark_xpm[] = {
 "13 14 54 1",
 " 	c None",
 ".	c #545254",
@@ -318,7 +318,7 @@ static char * bookmark_xpm[] = {
 };
 
 
-static char * modifUnsaved_xpm[] = {
+static const char * modifUnsaved_xpm[] = {
 "6 18 2 1",
 "z	c #FF8000",
 "o	c #FFC000",
@@ -341,7 +341,7 @@ static char * modifUnsaved_xpm[] = {
 "zozozo",
 "ozozoz"};
 
-static char * modifSaved_xpm[] = {
+static const char * modifSaved_xpm[] = {
 "6 18 2 1",
 "z	c #008000",
 "o	c #FFFFFF",

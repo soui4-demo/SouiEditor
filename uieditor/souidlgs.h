@@ -18,7 +18,7 @@
 #if (_WIN32_WINNT >= 0x0600) && !defined(_WIN32_WCE)
 #include <shobjidl.h>
 #endif // (_WIN32_WINNT >= 0x0600) && !defined(_WIN32_WCE)
-#include <core\SNativeWnd.h>
+#include <core/SNativeWnd.h>
 
 #ifndef _Post_writable_byte_size_
 #define _Post_writable_byte_size_(x)
@@ -631,7 +631,7 @@ public: \
 			{
 				// On NT platforms, GetOpenFileNameA thunks to GetOpenFileNameW and there 
 				// is absolutely nothing we can do except to start off with a large buffer.
-				ATLVERIFY(ResizeFilenameBuffer(_WTL_FIXED_OFN_BUFFER_LENGTH));
+				ResizeFilenameBuffer(_WTL_FIXED_OFN_BUFFER_LENGTH);
 			}
 #endif
 		}
@@ -1778,9 +1778,9 @@ public: \
 		{			
 			CRect rc;
 			::GetClientRect(m_hWnd, &rc);
-			HFONT hFont = CreateFont(-12, 0, 0, 0, 0, 0, 0, 0, GB2312_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, L"宋体");
+			HFONT hFont = CreateFont(-12, 0, 0, 0, 0, 0, 0, 0, GB2312_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, _T("宋体"));
 			m_pSCheckBtn=new CWindowImpl(this);
-			HWND hWnd = m_pSCheckBtn->Create(L"BUTTON", L"包括子目录", WS_CHILD | BS_CHECKBOX, 20, rc.bottom - 50, 100, 30, m_hWnd,NULL,SApplication::getSingleton().GetModule());
+			HWND hWnd = m_pSCheckBtn->Create(_T("BUTTON"), _T("包括子目录"), WS_CHILD | BS_CHECKBOX, 20, rc.bottom - 50, 100, 30, m_hWnd,NULL,SApplication::getSingleton().GetModule());
 			m_pSCheckBtn->SendMessage(WM_SETFONT, (WPARAM)hFont, 0);
 			m_pSCheckBtn->SendMessage(BM_SETCHECK,m_bIncludeChildDir?BST_CHECKED: BST_UNCHECKED, 0);			
 			m_pSCheckBtn->ShowWindow(TRUE);

@@ -12,8 +12,7 @@
 */
 
 #pragma once
-#include "core/shostwnd.h"
-#include "core/smsgloop.h"
+#include "core/SMsgLoop.h"
 #include "core/SHostDialog.h"
 #include "control/SRichEdit.h"
 
@@ -36,7 +35,7 @@ namespace SOUI
 
 		EVENT_MAP_BEGIN()
 			EVENT_ID_COMMAND(IDOK,OnOK)
-			EVENT_MAP_END()
+			EVENT_MAP_END2(SHostDialog)
 
 			BEGIN_MSG_MAP_EX(SCreateProDlg)
 			CHAIN_MSG_MAP(SHostDialog)

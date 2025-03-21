@@ -1,9 +1,8 @@
 #include "stdafx.h"
 #include "SCtrlsRegister.h"
-//À©Õ¹¿Ø¼þ
-#include "stabctrl2.h"
+#include "STabCtrl2.h"
 #include "SButtonEx.h"
-#include "simagemaskwnd.h"
+#include "SImageMaskWnd.h"
 #include "SFreeMoveWindow.h"
 #include "SVscrollbar.h"
 #include "SSkinNewScrollBar.h"
@@ -28,14 +27,14 @@ namespace SOUI{
 
 void SCtrlsRegister::RegisterCtrls(SApplication *theApp)
 {
-	theApp->RegisterWindowClass<STabPage2>();//×¢²áSTabPage2
-	theApp->RegisterWindowClass<STabCtrl2>();//×¢²áSTabCtrl2
-	theApp->RegisterWindowClass<SHeaderCtrlEx>();//×¢²áSTabCtrl2
-	theApp->RegisterWindowClass<SChromeTabCtrl>();//×¢²áChromeTabCtrl
-	theApp->RegisterWindowClass<SImageMaskWnd>();//×¢²áSImageMaskWnd
+	theApp->RegisterWindowClass<STabPage2>();//×¢ï¿½ï¿½STabPage2
+	theApp->RegisterWindowClass<STabCtrl2>();//×¢ï¿½ï¿½STabCtrl2
+	theApp->RegisterWindowClass<SHeaderCtrlEx>();//×¢ï¿½ï¿½STabCtrl2
+	theApp->RegisterWindowClass<SChromeTabCtrl>();//×¢ï¿½ï¿½ChromeTabCtrl
+	theApp->RegisterWindowClass<SImageMaskWnd>();//×¢ï¿½ï¿½SImageMaskWnd
 	theApp->RegisterWindowClass<SButtonEx>();
 	theApp->RegisterWindowClass<SWindowEx>();
-	theApp->RegisterWindowClass<SGifPlayer>();//×¢²ágif
+	theApp->RegisterWindowClass<SGifPlayer>();//×¢ï¿½ï¿½gif
 	theApp->RegisterWindowClass<SRatingBar>();
 	theApp->RegisterWindowClass<SIPAddressCtrl>();
 	theApp->RegisterWindowClass<STurn3dView>();

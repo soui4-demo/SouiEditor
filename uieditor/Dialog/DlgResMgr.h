@@ -1,6 +1,4 @@
 ﻿#pragma once
-#include "core/shostwnd.h"
-#include "core/smsgloop.h"
 #include "core/SHostDialog.h"
 #include "control/SRichEdit.h"
 #include "SImgCanvas.h"
@@ -38,7 +36,7 @@ namespace SOUI
 			EVENT_NAME_COMMAND(L"NAME_UIDESIGNER_btn_ZY_DEL", OnRemoveResource)
 
 			EVENT_NAME_COMMAND(L"btnOK", OnOK)
-		EVENT_MAP_END()
+		EVENT_MAP_END2(SHostDialog)
 
 		BOOL OnInitDialog(HWND wndFocus, LPARAM lInitParam);
 
